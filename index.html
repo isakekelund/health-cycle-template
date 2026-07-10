@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Health Cycle">
+<meta name="theme-color" content="#faf7f0">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkhlYWx0aCBDeWNsZSIsICJzaG9ydF9uYW1lIjogIkhlYWx0aCBDeWNsZSIsICJkZXNjcmlwdGlvbiI6ICJQZXJzb25hbCBoYWJpdCB0cmFja2VyIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmYWY3ZjAiLCAidGhlbWVfY29sb3IiOiAiI2ZhZjdmMCIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSGRwWkhSb1BTSTFNVElpSUdobGFXZG9kRDBpTlRFeUlpQjJhV1YzUW05NFBTSXdJREFnTlRFeUlEVXhNaUkrQ2lBZ1BHUmxabk0rQ2lBZ0lDQThiR2x1WldGeVIzSmhaR2xsYm5RZ2FXUTlJbUpuSWlCNE1UMGlNQ1VpSUhreFBTSXdKU0lnZURJOUlqRXdNQ1VpSUhreVBTSXhNREFsSWo0S0lDQWdJQ0FnUEhOMGIzQWdiMlptYzJWMFBTSXdKU0lnYzNSNWJHVTlJbk4wYjNBdFkyOXNiM0k2STJabVptUm1OaUl2UGdvZ0lDQWdJQ0E4YzNSdmNDQnZabVp6WlhROUlqRXdNQ1VpSUhOMGVXeGxQU0p6ZEc5d0xXTnZiRzl5T2lObU1tVmtaVEFpTHo0S0lDQWdJRHd2YkdsdVpXRnlSM0poWkdsbGJuUStDaUFnSUNBOGJHbHVaV0Z5UjNKaFpHbGxiblFnYVdROUltZHZiR1FpSUhneFBTSXdKU0lnZVRFOUlqQWxJaUI0TWowaU1UQXdKU0lnZVRJOUlqRXdNQ1VpUGdvZ0lDQWdJQ0E4YzNSdmNDQnZabVp6WlhROUlqQWxJaUJ6ZEhsc1pUMGljM1J2Y0MxamIyeHZjam9qWXpjNVlUTmxJaTgrQ2lBZ0lDQWdJRHh6ZEc5d0lHOW1abk5sZEQwaU1UQXdKU0lnYzNSNWJHVTlJbk4wYjNBdFkyOXNiM0k2SXpsak4yRXhaaUl2UGdvZ0lDQWdQQzlzYVc1bFlYSkhjbUZrYVdWdWRENEtJQ0FnSUR4c2FXNWxZWEpIY21Ga2FXVnVkQ0JwWkQwaVozSmxaVzRpSUhneFBTSXdKU0lnZVRFOUlqQWxJaUI0TWowaU1UQXdKU0lnZVRJOUlqRXdNQ1VpUGdvZ0lDQWdJQ0E4YzNSdmNDQnZabVp6WlhROUlqQWxJaUJ6ZEhsc1pUMGljM1J2Y0MxamIyeHZjam9qTTJGaE1EWmhJaTgrQ2lBZ0lDQWdJRHh6ZEc5d0lHOW1abk5sZEQwaU1UQXdKU0lnYzNSNWJHVTlJbk4wYjNBdFkyOXNiM0k2SXpGbU4yRTBPQ0l2UGdvZ0lDQWdQQzlzYVc1bFlYSkhjbUZrYVdWdWRENEtJQ0E4TDJSbFpuTStDaUFnUEhKbFkzUWdkMmxrZEdnOUlqVXhNaUlnYUdWcFoyaDBQU0kxTVRJaUlISjRQU0l4TVRJaUlHWnBiR3c5SW5WeWJDZ2pZbWNwSWk4K0NpQWdQSEJoZEdnZ1pEMGlUU0F4TVRVdU1DQXhPVFF1TnlCQklERTFNQ0F4TlRBZ01DQXhJREVnTVRReExqRWdNelF5TGpRaUlHWnBiR3c5SW01dmJtVWlJSE4wY205clpUMGlkWEpzS0NObmIyeGtLU0lnYzNSeWIydGxMWGRwWkhSb1BTSXpNQ0lnYzNSeWIydGxMV3hwYm1WallYQTlJbkp2ZFc1a0lpOCtDaUFnUEhCdmJIbG5iMjRnY0c5cGJuUnpQU0l4TVRVdU5Dd3pNVEV1T0NBeE5UVXVOaXd6TXpBdU1pQXhNall1TlN3ek5UUXVOaUlnWm1sc2JEMGlJemxqTjJFeFppSXZQZ29nSUR4d1lYUm9JR1E5SWswZ01UZ3dJREkxTUNCTUlESXlPQ0F5T1RnZ1RDQXpOREFnTVRnMklpQm1hV3hzUFNKdWIyNWxJaUJ6ZEhKdmEyVTlJblZ5YkNnalozSmxaVzRwSWlCemRISnZhMlV0ZDJsa2RHZzlJak15SWlCemRISnZhMlV0YkdsdVpXTmhjRDBpY205MWJtUWlJSE4wY205clpTMXNhVzVsYW05cGJqMGljbTkxYm1RaUx6NEtQQzl6ZG1jKyIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSJ9XX0=">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ZmZmRmNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmMmVkZTAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdvbGQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojYzc5YTNlIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzljN2ExZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JlZW4iIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2FhMDZhIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFmN2E0OCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMTIiIGZpbGw9InVybCgjYmcpIi8+CiAgPHBhdGggZD0iTSAxMTUuMCAxOTQuNyBBIDE1MCAxNTAgMCAxIDEgMTQxLjEgMzQyLjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNnb2xkKSIgc3Ryb2tlLXdpZHRoPSIzMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBvbHlnb24gcG9pbnRzPSIxMTUuNCwzMTEuOCAxNTUuNiwzMzAuMiAxMjYuNSwzNTQuNiIgZmlsbD0iIzljN2ExZiIvPgogIDxwYXRoIGQ9Ik0gMTgwIDI1MCBMIDIyOCAyOTggTCAzNDAgMTg2IiBmaWxsPSJub25lIiBzdHJva2U9InVybCgjZ3JlZW4pIiBzdHJva2Utd2lkdGg9IjMyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+">
+<title>Health Cycle</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Outfit:wght@300;400;500;600&display=swap');
+:root{
+  --bg:#faf7f0;--surface:#ffffff;--surface2:#f2ede0;
+  --border:#e0d8c3;--border2:#cfc3a3;
+  --gold:#9c7a1f;--gold-dim:#b8933a;--gold-bg:#fbf1d6;
+  --green:#2f8f5b;--green-bright:#1f7a48;--green-bg:#e3f5ea;
+  --red:#c14444;--red-bright:#a63333;--red-bg:#fbe6e6;
+  --text:#2a2620;--text-dim:#7a7262;--text-mid:#57503f;
+  --morning:#efe6fb;--morning-border:#c9a8ea;--morning-accent:#7a4bc4;
+  --day:#e2f6f4;--day-border:#a3ded8;--day-accent:#1f9d92;
+  --evening:#fdece0;--evening-border:#f0bd93;--evening-accent:#c9702a;
+  --night:#e5edfa;--night-border:#a9c3ec;--night-accent:#3763a8;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px}
+.hidden{display:none!important}
+
+/* SHARED */
+.screen-header{padding:24px 20px 16px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#ffffff 0%,var(--bg) 100%)}
+.brand{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:4px;text-align:center}
+.screen-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--text);text-align:center}
+.sync-badge{font-size:10px;letter-spacing:.1em;text-align:center;margin-top:4px;transition:color .3s}
+.sync-badge.synced{color:var(--green)}.sync-badge.syncing{color:var(--gold-dim)}.sync-badge.error{color:var(--red-bright)}
+
+/* HOME */
+.home-content{padding:20px;max-width:500px;margin:0 auto}
+.section-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px}
+.month-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s}
+.month-card:hover{border-color:var(--border2)}
+.month-card-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--text)}
+.month-card-meta{font-size:11px;color:var(--text-dim);margin-top:3px}
+.month-card-arrow{color:var(--text-dim);font-size:18px}
+.month-card-stats{display:flex;gap:12px;margin-top:6px}
+.month-stat{font-size:11px;color:var(--text-dim)}
+.month-stat span{color:var(--green-bright)}
+.add-month-btn{width:100%;padding:14px;background:transparent;border:1px dashed var(--border2);border-radius:12px;color:var(--text-dim);font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:4px;transition:all .2s}
+.add-month-btn:hover{border-color:var(--gold-dim);color:var(--gold)}
+.install-card{margin-top:18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.install-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:none;border:none;color:var(--text);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif}
+.install-chevron{color:var(--text-dim);transition:transform .2s;font-size:14px}
+.install-chevron.open{transform:rotate(180deg)}
+.install-body{padding:0 16px 16px}
+.install-block{margin-bottom:14px}
+.install-device{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:6px;font-weight:500}
+.install-steps{margin:0;padding-left:18px;font-size:12px;color:var(--text-mid);line-height:1.8}
+.install-note{font-size:11px;color:var(--text-dim);margin-top:4px;padding-top:10px;border-top:1px solid var(--border)}
+.delete-month-btn{padding:4px 10px;background:transparent;border:1px solid var(--red);border-radius:6px;color:var(--red-bright);font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif}
+
+/* MONTH SCREEN HEADER */
+.month-screen-header{padding:14px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.back-btn{background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text-dim);padding:6px 12px;cursor:pointer;font-size:12px;font-family:'Outfit',sans-serif;flex-shrink:0}
+.month-screen-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--text);flex:1;text-align:center}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--text-dim);flex-shrink:0;transition:background .3s}
+.sync-dot.synced{background:var(--green)}.sync-dot.syncing{background:var(--gold)}.sync-dot.error{background:var(--red-bright)}
+
+/* DATE NAV */
+.date-nav{display:flex;align-items:center;justify-content:center;gap:16px;padding:12px 20px;border-bottom:1px solid var(--border)}
+.date-btn{width:32px;height:32px;background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text-dim);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.date-btn:hover{border-color:var(--gold-dim);color:var(--gold)}.date-btn:disabled{opacity:.3;cursor:default}
+.date-display{text-align:center;min-width:160px}
+.date-day{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--text);text-transform:capitalize}
+.date-full{font-size:11px;color:var(--text-dim);letter-spacing:.08em;margin-top:2px}
+.today-badge{display:inline-block;font-size:9px;padding:2px 8px;background:var(--green-bg);border:1px solid var(--green);border-radius:20px;color:var(--green-bright);text-transform:uppercase;margin-top:3px;letter-spacing:.1em}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto}
+.tab{flex:1;min-width:60px;padding:11px 4px;text-align:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* CONTENT */
+.content{padding:16px 20px;max-width:500px;margin:0 auto}
+.sec-title{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+
+/* HABIT GROUPS */
+.habit-group{margin-bottom:16px}
+.habit-group-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:6px 10px;border-radius:8px}
+.habit-group-header.morning{background:var(--morning);border:1px solid var(--morning-border)}
+.habit-group-header.day{background:var(--day);border:1px solid var(--day-border)}
+.habit-group-header.evening{background:var(--evening);border:1px solid var(--evening-border)}
+.habit-group-header.night{background:var(--night);border:1px solid var(--night-border)}
+.habit-group-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.morning .habit-group-dot{background:var(--morning-accent)}
+.day .habit-group-dot{background:var(--day-accent)}
+.evening .habit-group-dot{background:var(--evening-accent)}
+.night .habit-group-dot{background:var(--night-accent)}
+.habit-group-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+.morning .habit-group-label{color:var(--morning-accent)}
+.day .habit-group-label{color:var(--day-accent)}
+.evening .habit-group-label{color:var(--evening-accent)}
+.night .habit-group-label{color:var(--night-accent)}
+.habit-group-count{margin-left:auto;font-size:10px;color:var(--text-dim)}
+
+/* HABITS */
+.habit-item{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:7px;cursor:pointer;transition:all .15s;user-select:none}
+.habit-item:hover{border-color:var(--border2)}.habit-item.done{background:var(--green-bg);border-color:#a8dcb8}
+.habit-check{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s}
+.habit-item.done .habit-check{background:var(--green);border-color:var(--green);color:#fff}
+.habit-name{font-size:13px;color:var(--text);flex:1}.habit-item.done .habit-name{color:var(--text-dim);text-decoration:line-through}
+.habit-streak{font-size:10px;color:var(--gold-dim)}
+.habit-miss-penalty{font-size:10px;color:var(--red-bright);font-weight:600;background:var(--red-bg);padding:2px 6px;border-radius:8px;border:1px solid var(--red)}
+.icon-btn{width:18px;height:18px;background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;font-family:'Outfit',sans-serif;padding:0}
+.habit-item:hover .icon-btn{opacity:1}
+.drag-handle{width:18px;height:18px;display:flex;align-items:center;justify-content:center;cursor:grab;color:var(--text-dim);font-size:12px;opacity:0;transition:opacity .15s;flex-shrink:0;touch-action:none}
+.habit-item:hover .drag-handle{opacity:1}
+.habit-item.dragging{opacity:.4;border-style:dashed}
+.habit-item.drag-over{border-color:var(--gold-dim);background:var(--gold-bg)}
+
+.toggle-manage{font-size:11px;color:var(--text-dim);background:transparent;border:none;cursor:pointer;padding:8px 0;font-family:'Outfit',sans-serif;letter-spacing:.05em}
+.toggle-manage:hover{color:var(--gold)}
+.manage-section{background:var(--surface2);border-radius:8px;padding:12px;margin-top:6px}
+.add-row{display:flex;gap:8px}
+.add-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 11px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif}
+.add-input::placeholder{color:var(--text-dim)}.add-input:focus{outline:none;border-color:var(--gold-dim)}
+.add-btn{padding:9px 14px;background:var(--green-bg);border:1px solid var(--green);border-radius:8px;color:var(--green-bright);font-size:12px;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+
+/* DAILY SCORE */
+.daily-score-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px;text-align:center}
+.daily-score-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1;transition:color .3s}
+.daily-score-label{font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.daily-bar{background:var(--bg);border-radius:20px;height:5px;overflow:hidden;margin:12px 0 6px}
+.daily-fill{height:100%;border-radius:20px;transition:width .4s,background .3s}
+.daily-meta{font-size:11px;color:var(--text-dim)}
+
+/* SCORE TAB */
+.choice-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+.choice-score{text-align:center;margin-bottom:14px}
+.score-number{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;line-height:1;transition:color .3s}
+.score-label{font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.weekly-bar{background:var(--bg);border-radius:20px;height:5px;overflow:hidden;margin:10px 0}
+.weekly-fill{height:100%;border-radius:20px;transition:width .4s,background .3s}
+.goal-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:14px}
+
+/* REFLECTION */
+.question-block{margin-bottom:12px}
+.q-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.q-label{font-size:12px;font-weight:500;color:var(--text)}
+.q-delete{background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:11px;font-family:'Outfit',sans-serif;padding:2px 6px}
+.reflection-area{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif;resize:vertical;min-height:65px;line-height:1.6}
+.reflection-area::placeholder{color:var(--text-dim)}.reflection-area:focus{outline:none;border-color:var(--gold-dim)}
+.save-btn{width:100%;padding:12px;background:var(--gold-bg);border:1px solid var(--gold-dim);border-radius:10px;color:var(--gold);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:10px;transition:all .2s}
+.save-btn:hover{background:#f5e6b8;border-color:var(--gold)}
+
+/* GRAPH */
+.graph-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px}
+.graph-title{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+.graph-container{width:100%;overflow:hidden}
+.graph-container svg{width:100%;height:auto;display:block}
+
+/* WEEK / MONTH DOTS */
+.week-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:14px}
+.wday{text-align:center}
+.wday-label{font-size:9px;color:var(--text-dim);text-transform:uppercase;margin-bottom:5px}
+.wdot{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;margin:0 auto;cursor:pointer;transition:all .15s}
+.wdot.has-data{border-color:var(--green);color:var(--green-bright);background:var(--green-bg)}
+.wdot.today{border-color:var(--gold);color:var(--gold)}
+.wdot.future{opacity:.3;cursor:default}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold);line-height:1}
+.stat-lbl{font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.missed-item{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:7px}
+.missed-name{flex:1;font-size:13px;color:var(--text)}
+.missed-bar-track{width:60px;height:4px;background:var(--bg);border-radius:4px;overflow:hidden;flex-shrink:0}
+.missed-bar-fill{height:100%;background:var(--red);border-radius:4px}
+.missed-count{font-size:11px;color:var(--red-bright);font-weight:600;min-width:32px;text-align:right}
+
+/* WEEK REFLECTIONS */
+.week-refl-day{margin-bottom:10px}
+.week-refl-header{font-size:11px;font-weight:500;color:var(--text-mid);margin-bottom:6px;text-transform:capitalize}
+.week-refl-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:5px}
+.week-refl-q{font-size:10px;color:var(--text-dim);letter-spacing:.05em;margin-bottom:4px}
+.week-refl-a{font-size:13px;color:var(--text);line-height:1.5}
+
+/* MONTH CALENDAR */
+.month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.month-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--text);text-align:center;text-transform:capitalize}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px}
+.cal-header{text-align:center;font-size:9px;color:var(--text-dim);text-transform:uppercase;padding:3px 0}
+.cal-day{aspect-ratio:1;border-radius:6px;border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;min-height:32px}
+.cal-day.empty{border:none;cursor:default}
+.cal-day.has-data{border-color:var(--green);background:var(--green-bg)}
+.cal-day.today{border-color:var(--gold);background:var(--gold-bg)}
+.cal-day.future{opacity:.25;cursor:default}
+.cal-num{font-size:11px;color:var(--text-dim)}
+.cal-day.has-data .cal-num{color:var(--green-bright)}
+.cal-day.today .cal-num{color:var(--gold)}
+.cal-dot{width:3px;height:3px;border-radius:50%;background:var(--green-bright);margin-top:2px}
+
+
+/* ── WORKOUT PANEL ── */
+.workout-panel{background:#f2ede0;border:1px solid #ddd2b0;border-radius:10px;margin:6px 0 10px;overflow:hidden;max-height:0;transition:max-height .4s ease;font-family:'Courier New',Courier,monospace}
+.workout-panel.open{max-height:4000px}
+.wp-inner{padding:14px}
+.wp-season-toggle{display:flex;gap:6px;margin-bottom:14px}
+.wp-season-btn{flex:1;background:none;border:1px solid #d3c7a0;color:#8a7f63;font-family:'Courier New',Courier,monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.45rem;border-radius:4px;cursor:pointer;text-align:center;transition:all .2s}
+.wp-season-btn.active-winter{border-color:#60a5fa;color:#60a5fa}
+.wp-season-btn.active-summer{border-color:#fbbf24;color:#fbbf24}
+.wp-header-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#8a7f63;margin-bottom:4px}
+.wp-count{font-size:1.8rem;font-weight:bold;color:#f0f0f0;line-height:1;letter-spacing:-.02em}
+.wp-progress-bar{height:2px;background:#e6dcc0;border-radius:1px;overflow:hidden;max-width:200px;margin:8px 0 14px}
+.wp-progress-fill{height:100%;background:#16a34a;border-radius:1px;transition:width .35s}
+.wp-section-title{font-size:.6rem;letter-spacing:.18em;color:#8a7f63;text-transform:uppercase;margin-bottom:8px}
+.wp-list{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.wp-item{border:1px solid #d3c7a0;border-radius:6px;overflow:hidden;transition:border-color .2s}
+.wp-item.done{border-color:#dcd0ab}
+.wp-row{display:flex;align-items:center;gap:8px;width:100%;padding:.75rem .9rem;background:#fffdf6;cursor:pointer;text-align:left;border:none;-webkit-appearance:none}
+.wp-item.done .wp-row{background:#e6dcc0}
+.wp-circle{width:18px;height:18px;border-radius:50%;border:1.5px solid #8a7f63;background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.wp-item.done .wp-circle{background:#16a34a;border-color:#16a34a}
+.wp-circle svg{display:none}.wp-item.done .wp-circle svg{display:block}
+.wp-num{font-size:.58rem;color:#8a7f63;letter-spacing:.1em;min-width:14px}
+.wp-item.done .wp-num{color:#9c8f68}
+.wp-name-wrap{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
+.wp-name{font-size:.82rem;color:#2a2620;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-item.done .wp-name{color:#9c8f68;text-decoration:line-through}
+.wp-sub{font-size:.6rem;color:#16a34a;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-chevron{width:12px;height:12px;color:#9c8f68;transition:transform .25s;flex-shrink:0}
+.wp-item.open .wp-chevron{transform:rotate(180deg);color:#6f6650}
+.wp-dropdown{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#fffdf6}
+.wp-item.open .wp-dropdown{max-height:3000px}
+.wp-dd-inner{padding:.9rem;border-top:1px solid #e6dcc0;display:flex;flex-direction:column;gap:.5rem}
+.wp-dd-label{font-size:.55rem;color:#16a34a;letter-spacing:.18em;text-transform:uppercase}
+.wp-options{display:flex;flex-direction:column;gap:.2rem}
+.wp-option{display:flex;align-items:center;gap:.55rem;padding:.4rem .55rem;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.wp-option.selected{border-color:#d3c7a0;background:#fffdf6}
+.wp-radio{width:12px;height:12px;border-radius:50%;border:1.5px solid #8a7f63;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.wp-option.selected .wp-radio{border-color:#16a34a}
+.wp-radio-dot{width:4px;height:4px;border-radius:50%;background:#16a34a;display:none}
+.wp-option.selected .wp-radio-dot{display:block}
+.wp-option-text{font-size:.75rem;color:#57503f;flex:1}
+.wp-option.selected .wp-option-text{color:#2a2620}
+.wp-sub-detail{display:none;flex-direction:column;gap:.2rem;padding:.45rem .55rem;background:#f7f1de;border-radius:4px;border:1px solid #e6dcc0;margin-top:.05rem}
+.wp-sub-detail.visible{display:flex}
+.wp-ex-label{font-size:.52rem;color:#8a7f63;letter-spacing:.12em;text-transform:uppercase;margin-top:.15rem}
+.wp-ex-label:first-child{margin-top:0}
+.wp-ex-single{font-size:.72rem;color:#6f6650;padding-left:.8rem;position:relative;line-height:1.5}
+.wp-ex-single::before{content:"—";position:absolute;left:0;color:#a89b73}
+.wp-ex-pair{display:flex;gap:.35rem;font-size:.72rem;color:#6f6650;padding-left:.8rem;position:relative;line-height:1.5}
+.wp-ex-pair::before{content:"—";position:absolute;left:0;color:#a89b73}
+.wp-ex-pair span{flex:1}
+.wp-warmup-pick{display:flex;gap:.35rem}
+.wp-wp-option{display:flex;align-items:center;gap:.35rem;padding:.28rem .5rem;border-radius:3px;border:1px solid #d3c7a0;cursor:pointer;font-size:.68rem;color:#6f6650;transition:all .15s}
+.wp-wp-option.wp-sel{background:#fffdf6;color:#3a3527;border-color:#c7b98d}
+.wp-wp-radio{width:10px;height:10px;border-radius:50%;border:1.5px solid #8a7f63;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wp-sel .wp-wp-radio{border-color:#16a34a}
+.wp-wp-dot{width:3px;height:3px;border-radius:50%;background:#16a34a;display:none}
+.wp-sel .wp-wp-dot{display:block}
+.wp-checks{display:flex;flex-direction:column;gap:.2rem}
+.wp-check-option{display:flex;align-items:center;gap:.55rem;padding:.35rem .55rem;border-radius:4px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.wp-check-option.checked{border-color:#d3c7a0;background:#fffdf6}
+.wp-checkbox{width:12px;height:12px;border-radius:2px;border:1.5px solid #8a7f63;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.wp-check-option.checked .wp-checkbox{border-color:#16a34a;background:#16a34a}
+.wp-check-option.checked .wp-checkbox svg{display:block}
+.wp-checkbox svg{display:none}
+.wp-check-text{font-size:.75rem;color:#57503f}
+.wp-check-option.checked .wp-check-text{color:#2a2620}
+.wp-reset-row{text-align:center;margin-top:10px}
+.wp-reset-btn{background:none;border:1px solid #d3c7a0;color:#8a7f63;font-family:'Courier New',Courier,monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1.2rem;border-radius:4px;cursor:pointer}
+.wp-divider{height:1px;background:#e6dcc0;margin:.15rem 0}
+/* Expand arrow on functional workout habit */
+.habit-expand-arrow{font-size:10px;color:var(--text-dim);transition:transform .25s;flex-shrink:0}
+.habit-item.workout-open .habit-expand-arrow{transform:rotate(180deg);color:var(--gold)}
+
+/* SETTINGS PANEL */
+.settings-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:150;display:flex;flex-direction:column}
+.settings-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.settings-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--text)}
+.settings-close{background:var(--surface);border:1px solid var(--border2);border-radius:8px;color:var(--text-dim);padding:6px 12px;cursor:pointer;font-size:12px;font-family:'Outfit',sans-serif}
+.settings-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface)}
+.settings-tab{flex:1;padding:10px 4px;text-align:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.settings-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.settings-body{flex:1;overflow-y:auto;padding:16px 20px}
+.settings-section{margin-bottom:20px}
+.settings-section-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+.settings-item{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px}
+.settings-item-name{flex:1;font-size:13px;color:var(--text)}
+.settings-item-sub{font-size:11px;color:var(--text-dim)}
+.settings-drag{color:var(--text-dim);cursor:grab;font-size:12px;padding:2px 4px}
+.settings-edit-btn{padding:4px 10px;background:transparent;border:1px solid var(--border2);border-radius:5px;color:var(--text-dim);font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif}
+.settings-del-btn{padding:4px 8px;background:transparent;border:1px solid var(--red);border-radius:5px;color:var(--red-bright);font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif}
+.settings-add-row{display:flex;gap:8px;margin-top:8px}
+.settings-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif}
+.settings-input::placeholder{color:var(--text-dim)}.settings-input:focus{outline:none;border-color:var(--gold-dim)}
+.settings-select{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 11px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif;cursor:pointer}
+.settings-add-btn{padding:8px 14px;background:var(--green-bg);border:1px solid var(--green);border-radius:8px;color:var(--green-bright);font-size:12px;cursor:pointer;font-family:'Outfit',sans-serif;white-space:nowrap}
+.settings-group-tag{font-size:9px;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.08em}
+.day-pill-row{display:flex;gap:6px;flex-wrap:wrap}
+.day-pill{flex:1;min-width:40px;padding:12px 4px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-dim);cursor:pointer;transition:all .15s}
+.day-pill.on{background:var(--green-bg);border-color:var(--green);color:var(--green-bright);font-weight:500}
+.tag-morning{background:var(--morning);color:var(--morning-accent);border:1px solid var(--morning-border)}
+.tag-day{background:var(--day);color:var(--day-accent);border:1px solid var(--day-border)}
+.tag-evening{background:var(--evening);color:var(--evening-accent);border:1px solid var(--evening-border)}
+.tag-night{background:var(--night);color:var(--night-accent);border:1px solid var(--night-border)}
+.tag-custom{background:var(--surface2);color:var(--text-mid);border:1px solid var(--border2)}
+.habit-group-header.custom{background:var(--surface2);border:1px solid var(--border2)}
+.custom .habit-group-dot{background:var(--text-mid)}
+.custom .habit-group-label{color:var(--text-mid)}
+/* Workout settings */
+.wp-settings-btn{background:none;border:1px solid var(--border2);border-radius:6px;color:var(--text-dim);font-family:'Courier New',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .8rem;cursor:pointer;margin-top:10px}
+.wp-settings-panel{background:#f2ede0;border:1px solid #ddd2b0;border-radius:8px;margin-top:8px;padding:12px;display:none}
+.wp-settings-panel.open{display:block}
+.wp-stabs{display:flex;gap:6px;margin-bottom:12px}
+.wp-stab{flex:1;background:none;border:1px solid #d3c7a0;color:#8a7f63;font-family:'Courier New',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem;border-radius:4px;cursor:pointer}
+.wp-stab.active{border-color:#9c7a1f;color:#9c7a1f}
+.wp-stab-content{display:none}.wp-stab-content.active{display:block}
+.wp-sitem{display:flex;align-items:center;gap:6px;padding:7px 9px;background:#fffdf6;border:1px solid #d3c7a0;border-radius:5px;margin-bottom:5px}
+.wp-sitem-name{flex:1;font-size:.75rem;color:#3a3527}
+.wp-sitem-sub{font-size:.6rem;color:#16a34a}
+.wp-sitem-drag{color:#9c8f68;cursor:grab;font-size:11px}
+.wp-sitem-edit{padding:3px 8px;background:none;border:1px solid #c7b98d;border-radius:4px;color:#6f6650;font-size:.6rem;cursor:pointer;font-family:'Courier New',monospace}
+.wp-sitem-del{padding:3px 7px;background:none;border:1px solid #e0a3a3;border-radius:4px;color:#a63333;font-size:.6rem;cursor:pointer;font-family:'Courier New',monospace}
+.wp-sadd-row{display:flex;gap:6px;margin-top:8px}
+.wp-sinput{flex:1;background:#fffdf6;border:1px solid #d3c7a0;border-radius:5px;padding:7px 9px;color:#2a2620;font-size:.75rem;font-family:'Outfit',sans-serif}
+.wp-sinput:focus{outline:none;border-color:#9c7a1f}
+.wp-sselect{background:#fffdf6;border:1px solid #d3c7a0;border-radius:5px;padding:7px 9px;color:#2a2620;font-size:.75rem;font-family:'Outfit',sans-serif}
+.wp-sadd-btn{padding:7px 12px;background:#e3f5ea;border:1px solid #2f8f5b;border-radius:5px;color:#1f7a48;font-size:.6rem;cursor:pointer;font-family:'Courier New',monospace;white-space:nowrap}
+/* Habit settings button */
+.habit-settings-btn{background:none;border:none;color:var(--text-dim);font-size:16px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .2s}
+.habit-settings-btn:hover{color:var(--gold)}
+
+/* LOADING */
+.loading{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:13px}
+.spinner{width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green-bg);border:1px solid var(--green);border-radius:10px;padding:10px 20px;color:var(--green-bright);font-size:13px;transition:transform .3s;z-index:200;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:24px;width:100%;max-width:360px}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--text);margin-bottom:16px}
+.modal-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:11px 13px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;margin-bottom:14px}
+.modal-input::placeholder{color:var(--text-dim)}.modal-input:focus{outline:none;border-color:var(--gold-dim)}
+.modal-btns{display:flex;gap:8px}
+.modal-copy-row{margin:-6px 0 14px}
+.modal-check-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-mid);cursor:pointer}
+.modal-check-row input{accent-color:var(--gold)}
+.modal-cancel{flex:1;padding:11px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif}
+.modal-ok{flex:1;padding:11px;background:var(--gold-bg);border:1px solid var(--gold-dim);border-radius:8px;color:var(--gold);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif}
+</style>
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div id="screen-home">
+  <div class="screen-header">
+    <div class="brand">Health Cycle</div>
+    <div class="screen-title">Habittracker</div>
+    <div class="sync-badge syncing" id="homeSyncBadge">Connecting...</div>
+  </div>
+  <div id="homeLoading" class="loading"><div class="spinner"></div>Loading...</div>
+  <div id="homeContent" class="home-content hidden">
+    <div class="section-label">Your months</div>
+    <div id="monthList"></div>
+    <button class="add-month-btn" onclick="openAddMonth()">+ Add month</button>
+
+    <div class="install-card" id="whyCard">
+      <button class="install-toggle" onclick="toggleWhyInfo()">
+        <span>💡 Why a habit tracker</span>
+        <span class="install-chevron" id="whyChevron">⌄</span>
+      </button>
+      <div class="install-body hidden" id="whyBody">
+        <div style="font-size:12.5px;color:var(--text-mid);line-height:1.7">
+          We live such <em>unnatural</em> lifestyles today that staying healthy now takes an unnatural number of deliberate actions — things a body a few generations ago never had to think about. Sleep, movement, food, light, screens, recovery — all of it now needs conscious effort just to counteract the environment we've built.
+          <br><br>
+          Nobody can hold all of that in their head, every day, forever. That's the whole point of this app: not to gamify your life, but to offload the remembering, so you can just do the thing.
+        </div>
+      </div>
+    </div>
+
+    <div class="install-card" id="installCard">
+      <button class="install-toggle" onclick="toggleInstallInfo()">
+        <span>📲 Add this app to your home screen</span>
+        <span class="install-chevron" id="installChevron">⌄</span>
+      </button>
+      <div class="install-body hidden" id="installBody">
+        <div class="install-block">
+          <div class="install-device">iPhone / iPad (Safari)</div>
+          <ol class="install-steps">
+            <li>Tap the <strong>Share</strong> button (square with an arrow) at the bottom of the screen</li>
+            <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
+            <li>Tap <strong>Add</strong> in the top right</li>
+          </ol>
+        </div>
+        <div class="install-block">
+          <div class="install-device">Android (Chrome)</div>
+          <ol class="install-steps">
+            <li>Tap the <strong>⋮</strong> menu in the top right</li>
+            <li>Tap <strong>Add to Home screen</strong> or <strong>Install app</strong></li>
+            <li>Confirm by tapping <strong>Add</strong></li>
+          </ol>
+        </div>
+        <div class="install-block">
+          <div class="install-device">Mac / Windows (Chrome)</div>
+          <ol class="install-steps">
+            <li>Click the install icon in the address bar (or the <strong>⋮</strong> menu)</li>
+            <li>Select <strong>Install</strong></li>
+          </ol>
+        </div>
+        <div class="install-note">Once added, it opens like a normal app — no browser bar, and works offline.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MONTH SCREEN -->
+<div id="screen-month" class="hidden">
+  <div class="month-screen-header">
+    <button class="back-btn" onclick="goHome()">← Back</button>
+    <div class="month-screen-name" id="monthScreenName"></div>
+    <div class="sync-dot" id="syncDot"></div>
+    <button class="habit-settings-btn" onclick="openHabitSettings()">⚙</button>
+  </div>
+  <div class="date-nav">
+    <button class="date-btn" onclick="changeDate(-1)">←</button>
+    <div class="date-display">
+      <div class="date-day" id="dateDayLabel"></div>
+      <div class="date-full" id="dateFullLabel"></div>
+      <div id="todayBadge" class="today-badge hidden">Today</div>
+    </div>
+    <button class="date-btn" id="nextDateBtn" onclick="changeDate(1)">→</button>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('dag',this)">Day</div>
+    <div class="tab" onclick="switchTab('score',this)">Score</div>
+    <div class="tab" onclick="switchTab('vecka',this)">Week</div>
+    <div class="tab" onclick="switchTab('manad',this)">Month</div>
+  </div>
+
+  <!-- DAY TAB -->
+  <div id="tab-dag" class="content">
+    <div id="dailyScoreCard" class="daily-score-card">
+      <div class="daily-score-num" id="dailyScoreNum">—</div>
+      <div class="daily-score-label">Daily score</div>
+      <div class="daily-bar"><div class="daily-fill" id="dailyFill" style="width:0%"></div></div>
+      <div class="daily-meta" id="dailyMeta">0 of 0 habits completed</div>
+    </div>
+    <div id="habitList"></div>
+    <button class="toggle-manage" onclick="toggleSection('manageHabits')">⚙ Manage habits</button>
+    <div id="manageHabits" class="manage-section hidden">
+      <div class="add-row">
+        <input class="add-input" id="newHabitInput" placeholder="New habit..." onkeydown="if(event.key==='Enter')addHabit()">
+        <select class="add-input" id="newHabitGroup" style="max-width:110px;padding:9px 6px"></select>
+        <button class="add-btn" onclick="addHabit()">+ Add</button>
+      </div>
+      <button class="toggle-manage" style="margin-top:10px;display:block" onclick="exportMonthData()">⬇ Export this month as a backup file</button>
+      <button class="toggle-manage" style="color:var(--red-bright);margin-top:6px;display:block" onclick="if(confirm('Clear all logged data for this month?'))clearAllData()">✕ Clear all logged data</button>
+    </div>
+    <hr class="divider">
+    <div class="sec-title">Reflection</div>
+    <div id="questionList"></div>
+    <button class="save-btn" onclick="saveReflection()">Save reflection</button>
+    <div style="margin-top:10px">
+      <button class="toggle-manage" onclick="toggleSection('manageQuestions')">⚙ Manage questions</button>
+      <div id="manageQuestions" class="manage-section hidden">
+        <div class="add-row">
+          <input class="add-input" id="newQuestionInput" placeholder="New question..." onkeydown="if(event.key==='Enter')addQuestion()">
+          <button class="add-btn" onclick="addQuestion()">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE TAB -->
+  <div id="tab-score" class="content hidden">
+    <div class="choice-card">
+      <div class="choice-score">
+        <div class="score-number" id="scoreNumber">0</div>
+        <div class="score-label">Net score this week</div>
+      </div>
+      <div class="weekly-bar"><div class="weekly-fill" id="weeklyFill" style="width:0%"></div></div>
+      <div class="goal-row">
+        <span id="weeklyProgress">0 of 7</span>
+        <span id="weeklyGoalLabel">Goal: +7 per week</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-dim);line-height:2;margin-top:8px">
+        <div style="color:var(--text-mid);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Each habit done = +1 point</div>
+        Each habit missed costs more the longer it's been skipped — 1st miss = −1, 2nd in a row = −2, 3rd = −3, and so on.<br><br>
+        <strong style="color:var(--green-bright)">A day counts as positive</strong> when total points are above 0<br>
+        <strong style="color:var(--red-bright)">A day counts as negative</strong> when total points are 0 or below
+      </div>
+    </div>
+    <div class="stats-grid" id="scoreStats"></div>
+  </div>
+
+  <!-- WEEK TAB -->
+  <div id="tab-vecka" class="content hidden">
+    <div class="sec-title">This week</div>
+    <div class="week-grid" id="weekGrid"></div>
+    <div class="graph-section">
+      <div class="graph-title">Habits per day (0–100%)</div>
+      <div class="graph-container" id="weekGraphContainer"></div>
+    </div>
+    <div class="stats-grid" id="weekStats"></div>
+    <div class="sec-title" style="margin-top:4px">Reflections this week</div>
+    <div id="weekReflections"></div>
+  </div>
+
+  <!-- MONTH TAB -->
+  <div id="tab-manad" class="content hidden">
+    <div class="month-nav">
+      <button class="date-btn" onclick="changeViewMonth(-1)">←</button>
+      <div class="month-title" id="calMonthTitle"></div>
+      <button class="date-btn" onclick="changeViewMonth(1)">→</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="graph-section">
+      <div class="graph-title">Habits per day (0–100%)</div>
+      <div class="graph-container" id="monthGraphContainer"></div>
+    </div>
+    <div class="stats-grid" id="monthStats"></div>
+    <div class="sec-title" style="margin-top:4px">Most missed this month</div>
+    <div id="mostMissedList"></div>
+  </div>
+</div>
+
+<!-- EDIT HABIT MODAL -->
+<div id="editHabitModal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-title">Edit habit</div>
+    <input class="modal-input" id="editHabitInput" placeholder="Habit name..." onkeydown="if(event.key==='Enter')confirmEditHabit()">
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeEditHabit()">Cancel</button>
+      <button class="modal-ok" onclick="confirmEditHabit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- HABIT SETTINGS OVERLAY -->
+<div id="habitSettingsOverlay" class="settings-overlay hidden">
+  <div class="settings-header">
+    <div class="settings-title">Settings</div>
+    <button class="settings-close" onclick="closeHabitSettings()">✕ Close</button>
+  </div>
+  <div class="settings-tabs">
+    <div class="settings-tab active" onclick="switchSettingsTab('habits',this)">Habits</div>
+    <div class="settings-tab" onclick="switchSettingsTab('groups',this)">Groups</div>
+    <div class="settings-tab" onclick="switchSettingsTab('days',this)">Days</div>
+    <div class="settings-tab" onclick="switchSettingsTab('workout',this)">Workout</div>
+  </div>
+  <div class="settings-body">
+    <div id="stab-habits" class="stab-content">
+      <div class="settings-section">
+        <div class="settings-section-label">All habits</div>
+        <div id="settingsHabitList"></div>
+        <div class="settings-add-row">
+          <input class="settings-input" id="settingsNewHabit" placeholder="New habit name...">
+          <select class="settings-select" id="settingsNewHabitGroup">
+            <option value="night">Night</option>
+            <option value="morning" selected>Morning</option>
+            <option value="day">Day</option>
+            <option value="evening">Evening</option>
+          </select>
+          <button class="settings-add-btn" onclick="settingsAddHabit()">+ Add</button>
+        </div>
+      </div>
+    </div>
+    <div id="stab-groups" class="stab-content hidden">
+      <div class="settings-section">
+        <div class="settings-section-label">Group order (drag to reorder)</div>
+        <div id="settingsGroupList"></div>
+      </div>
+    </div>
+    <div id="stab-days" class="stab-content hidden">
+      <div class="settings-section">
+        <div class="settings-section-label">Which days should be tracked</div>
+        <div id="settingsDaysList"></div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:10px;line-height:1.6">Untracked days show as rest days — habits can't be checked off, except your workout, which can always be logged.</div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-label">Start counting missed habits from</div>
+        <input class="settings-input" type="date" id="escalationStartInput" onchange="setEscalationStart(this.value)">
+        <div style="font-size:11px;color:var(--text-dim);margin-top:8px;line-height:1.6">Missing a habit repeatedly makes its penalty grow — but only for days on or after this date. Anything before it is ignored, so your history before you started doesn't count against you.</div>
+      </div>
+    </div>
+    <div id="stab-workout" class="stab-content hidden">
+      <div class="settings-section">
+        <div class="settings-section-label">Cycle slots</div>
+        <div id="wpSettingsCycle"></div>
+        <div class="settings-add-row">
+          <input class="settings-input" id="wpNewSlotName" placeholder="Slot name...">
+          <select class="settings-select" id="wpNewSlotGroup">
+            <option value="gym">Gym</option>
+            <option value="cardio">Cardio</option>
+          </select>
+          <button class="settings-add-btn" onclick="wpSettingsAddSlot()">+ Add</button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-label">Gym presets</div>
+        <div id="wpSettingsGym"></div>
+        <div class="settings-add-row">
+          <input class="settings-input" id="wpNewGymName" placeholder="Preset name...">
+          <button class="settings-add-btn" onclick="wpSettingsAddGym()">+ Add</button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-label">Cardio presets</div>
+        <div id="wpSettingsCardio"></div>
+        <div class="settings-add-row">
+          <input class="settings-input" id="wpNewCardioName" placeholder="Preset name...">
+          <button class="settings-add-btn" onclick="wpSettingsAddCardio()">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WELCOME / ONBOARDING MODAL -->
+<div id="welcomeModal" class="modal-overlay hidden">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-title">Welcome to Health Cycle</div>
+    <div style="font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:16px">
+      A quick tour before you start:
+      <ul style="margin:10px 0 0;padding-left:18px">
+        <li style="margin-bottom:8px"><strong style="color:var(--text)">Groups</strong> — habits are organized into sections like Morning, Evening, or your own custom ones. Edit these anytime in ⚙ Settings.</li>
+        <li style="margin-bottom:8px"><strong style="color:var(--text)">Functional workout</strong> — tap it to open a built-in workout tracker with Winter/Summer cycles.</li>
+        <li style="margin-bottom:8px"><strong style="color:var(--text)">Rest days</strong> — pick which days of the week get tracked in ⚙ Settings → Days. Everything else stays untouched, except workouts.</li>
+        <li style="margin-bottom:8px"><strong style="color:var(--text)">Missed habits</strong> — skipping a habit repeatedly makes it "cost" more the longer it's ignored. You choose the exact date this starts counting from in ⚙ Settings → Days.</li>
+        <li><strong style="color:var(--text)">Everything is editable</strong> — habits, groups, tracked days, and the workout content are all yours to change.</li>
+      </ul>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="loadExampleDay()">See an example day</button>
+      <button class="modal-ok" onclick="closeWelcome()">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT HABIT SETTINGS MODAL -->
+<div id="editSettingsHabitModal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-title">Edit habit</div>
+    <input class="modal-input" id="editSettingsHabitName" placeholder="Habit name..." onkeydown="if(event.key==='Enter')confirmSettingsEditHabit()">
+    <select class="modal-input" id="editSettingsHabitGroup" style="margin-top:-6px">
+      <option value="night">Night</option>
+      <option value="morning">Morning</option>
+      <option value="day">Day</option>
+      <option value="evening">Evening</option>
+    </select>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeSettingsEditHabit()">Cancel</button>
+      <button class="modal-ok" onclick="confirmSettingsEditHabit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD MONTH MODAL -->
+<div id="addMonthModal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-title">Add month</div>
+    <input class="modal-input" id="monthNameInput" placeholder="E.g. June 2026" onkeydown="if(event.key==='Enter')confirmAddMonth()">
+    <div id="copyFromRow" class="modal-copy-row hidden">
+      <label class="modal-check-row">
+        <input type="checkbox" id="copyFromPrevious" checked>
+        <span>Copy habits & groups from <strong id="copyFromName"></strong></span>
+      </label>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-ok" onclick="confirmAddMonth()">Create</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT HABIT MODAL -->
+<div id="editHabitModal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-title">Edit habit</div>
+    <input class="modal-input" id="editHabitInput" placeholder="Habit name..." onkeydown="if(event.key==='Enter')confirmEditHabit()">
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="closeEditHabit()">Cancel</button>
+      <button class="modal-ok" onclick="confirmEditHabit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+// ── LOCAL STORAGE DATA LAYER ──
+// This template runs entirely on-device: no server, no account, no shared
+// database. Every person who opens this file gets their own private data,
+// stored only in their own browser. Swap this block out for a real Firebase
+// config (see the docs) if you want cross-device sync instead.
+function ref(_db, path){ return path; }
+function get(path){
+  return Promise.resolve().then(()=>{
+    const raw = localStorage.getItem('hcdata:'+path);
+    if(raw===null) return {exists:()=>false, val:()=>null};
+    const val = JSON.parse(raw);
+    return {exists:()=>true, val:()=>val};
+  });
+}
+function set(path, value){
+  return Promise.resolve().then(()=>{
+    if(value===null || value===undefined){ localStorage.removeItem('hcdata:'+path); }
+    else { localStorage.setItem('hcdata:'+path, JSON.stringify(value)); }
+  });
+}
+const db=null;
+const UID='local';
+
+// DEFAULT HABITS grouped by time of day
+const DEFAULT_HABITS=[
+  {id:'h_m1',name:'Drink a glass of water',group:'morning'},
+  {id:'h_m2',name:'5 minutes of stretching',group:'morning'},
+  {id:'h_m3',name:'Plan the day',group:'morning'},
+  {id:'h_m4',name:'Meditate',group:'morning'},
+  {id:'h_m12',name:'Functional workout',group:'morning'},
+  {id:'h_e1',name:'Read for 15 minutes',group:'evening'},
+  {id:'h_e2',name:'Journal',group:'evening'},
+  {id:'h_e3',name:'No screens before bed',group:'evening'},
+  {id:'h_g1',name:'Eat a healthy meal',group:'general'},
+  {id:'h_g2',name:'Take a walk',group:'general'},
+  {id:'h_g3',name:'Limit social media',group:'general'},
+];
+
+const DEFAULT_QUESTIONS=[
+  {id:'q1',text:'One thing you are grateful for?'},
+  {id:'q2',text:'What did you do well today?'},
+];
+
+const BUILTIN_GROUP_META={
+  morning:{label:'First half',cls:'morning'},
+  day:{label:'Day',cls:'day'},
+  evening:{label:'Second half',cls:'evening'},
+  night:{label:'First half',cls:'night'},
+};
+// Custom group labels stored in localStorage
+function getGroupLabel(g){
+  const custom = JSON.parse(localStorage.getItem('hc-group-labels')||'{}');
+  if(custom[g]) return custom[g];
+  if(BUILTIN_GROUP_META[g]) return BUILTIN_GROUP_META[g].label;
+  // Capitalize first letter for any custom group
+  return g.charAt(0).toUpperCase()+g.slice(1);
+}
+function getGroupMeta(g){
+  const label = getGroupLabel(g);
+  const cls = BUILTIN_GROUP_META[g]?BUILTIN_GROUP_META[g].cls:'custom';
+  return {label, cls};
+}
+
+// STATE
+let currentDate=new Date(); currentDate.setHours(0,0,0,0);
+const today=new Date(); today.setHours(0,0,0,0);
+let viewMonth=new Date(today.getFullYear(),today.getMonth(),1);
+let monthList=[];
+let currentMonthId=null;
+let currentMonth={habits:[],questions:[],days:{}};
+
+// UTILS
+function dk(d){return d.toISOString().split('T')[0];}
+function getDay(d){return currentMonth.days[dk(d)]||{habits:{},reflection:{}};}
+function getMonday(d){const x=new Date(d),dow=x.getDay();x.setDate(x.getDate()+(dow===0?-6:1-dow));return x;}
+
+function setSyncStatus(s){
+  const dot=document.getElementById('syncDot');
+  if(dot){dot.className='sync-dot '+s;}
+  const badge=document.getElementById('homeSyncBadge');
+  if(badge){
+    badge.className='sync-badge '+s;
+    badge.textContent=s==='synced'?'✓ Synced':s==='syncing'?'Saving...':'✗ Error';
+  }
+}
+
+async function fbSet(path,data){
+  setSyncStatus('syncing');
+  try{await set(ref(db,`users/${UID}/${path}`),data);setSyncStatus('synced');}
+  catch(e){setSyncStatus('error');}
+}
+
+// HOME
+async function loadHome(){
+  try{
+    const snap=await get(ref(db,`users/${UID}/monthList`));
+    monthList=snap.exists()?snap.val():[];
+    document.getElementById('homeLoading').classList.add('hidden');
+    document.getElementById('homeContent').classList.remove('hidden');
+    document.getElementById('homeSyncBadge').className='sync-badge synced';
+    document.getElementById('homeSyncBadge').textContent='✓ Synced';
+    renderHome();
+    if(!localStorage.getItem('hc-welcomed')){
+      document.getElementById('welcomeModal').classList.remove('hidden');
+    }
+  }catch(e){
+    document.getElementById('homeLoading').innerHTML='<div style="color:var(--red-bright);font-size:13px">Could not connect.</div>';
+  }
+}
+
+window.closeWelcome = function(){
+  document.getElementById('welcomeModal').classList.add('hidden');
+  localStorage.setItem('hc-welcomed','1');
+};
+
+// Creates a one-off example month with a single filled-in day, so a first-time
+// user can see what a completed day, streaks, and reflections look like.
+window.loadExampleDay = async function(){
+  closeWelcome();
+  const id='example-'+Date.now();
+  const now=new Date();
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const exampleHabits=DEFAULT_HABITS;
+  const exampleQuestions=DEFAULT_QUESTIONS;
+  const exampleDayKey=dk(today);
+  const exampleDoneMap={};
+  exampleHabits.forEach((h,i)=>{ if(i%2===0) exampleDoneMap[h.id]=true; }); // check off every other habit
+  const exampleDay={
+    habits: exampleDoneMap,
+    reflection: exampleQuestions.length ? {[exampleQuestions[0].id]: 'This is what a saved reflection looks like.'} : {}
+  };
+  monthList.push({id,name:'Example month',created:`Created ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`,logged:1});
+  await fbSet(`months/${id}/habits`,exampleHabits);
+  await fbSet(`months/${id}/questions`,exampleQuestions);
+  await fbSet(`months/${id}/days/${exampleDayKey}`,exampleDay);
+  await fbSet('monthList',monthList);
+  renderHome();
+  showToast('Example month added — delete it anytime from the home screen');
+};
+
+function renderHome(){
+  const el=document.getElementById('monthList');
+  if(!monthList.length){el.innerHTML='<div style="color:var(--text-dim);font-size:13px;text-align:center;padding:24px">No months yet — create your first!</div>';return;}
+  const order=monthList.map((m,i)=>i).reverse(); // newest-created first
+  el.innerHTML=order.map(i=>{
+    const m=monthList[i];
+    return `<div class="month-card" onclick="enterMonth('${m.id}')">
+      <div>
+        <div class="month-card-name">${m.name}</div>
+        <div class="month-card-meta">${m.created||''}</div>
+        <div class="month-card-stats"><span class="month-stat">Days logged: <span>${m.logged||0}</span></span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="delete-month-btn" onclick="event.stopPropagation();deleteMonth(${i})">Remove</button>
+        <div class="month-card-arrow">›</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.toggleInstallInfo = function(){
+  const body = document.getElementById('installBody');
+  const chevron = document.getElementById('installChevron');
+  body.classList.toggle('hidden');
+  chevron.classList.toggle('open');
+};
+
+window.toggleWhyInfo = function(){
+  const body = document.getElementById('whyBody');
+  const chevron = document.getElementById('whyChevron');
+  body.classList.toggle('hidden');
+  chevron.classList.toggle('open');
+};
+
+window.openAddMonth=function(){
+  document.getElementById('addMonthModal').classList.remove('hidden');
+  const row=document.getElementById('copyFromRow');
+  if(monthList.length>0){
+    row.classList.remove('hidden');
+    document.getElementById('copyFromName').textContent=monthList[monthList.length-1].name;
+  } else {
+    row.classList.add('hidden');
+  }
+  setTimeout(()=>document.getElementById('monthNameInput').focus(),100);
+};
+
+window.closeModal=function(){
+  document.getElementById('addMonthModal').classList.add('hidden');
+  document.getElementById('monthNameInput').value='';
+};
+
+window.confirmAddMonth=async function(){
+  const name=document.getElementById('monthNameInput').value.trim();
+  if(!name)return;
+  const id='m'+Date.now();
+  const now=new Date();
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  monthList.push({id,name,created:`Created ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`,logged:0});
+
+  const copyChk=document.getElementById('copyFromPrevious');
+  const shouldCopy = copyChk && copyChk.checked && monthList.length>1;
+  if(shouldCopy){
+    const prevMonth=monthList[monthList.length-2];
+    const prevHabitsSnap=await get(ref(db,`users/${UID}/months/${prevMonth.id}/habits`));
+    const prevQuestionsSnap=await get(ref(db,`users/${UID}/months/${prevMonth.id}/questions`));
+    const prevHabits=prevHabitsSnap.exists()?prevHabitsSnap.val():DEFAULT_HABITS;
+    const prevQuestions=prevQuestionsSnap.exists()?prevQuestionsSnap.val():DEFAULT_QUESTIONS;
+    await fbSet(`months/${id}/habits`,prevHabits);
+    await fbSet(`months/${id}/questions`,prevQuestions);
+  } else {
+    await fbSet(`months/${id}/habits`,DEFAULT_HABITS);
+    await fbSet(`months/${id}/questions`,DEFAULT_QUESTIONS);
+  }
+  await fbSet('monthList',monthList);
+  closeModal();
+  renderHome();
+  showToast(name+' created ✓');
+};
+
+window.deleteMonth=async function(idx){
+  const m=monthList[idx];
+  monthList.splice(idx,1);
+  await fbSet('monthList',monthList);
+  renderHome();
+  showToast(m.name+' removed');
+};
+
+// ENTER MONTH
+window.enterMonth=async function(id){
+  currentMonthId=id;
+  const m=monthList.find(x=>x.id===id);
+  document.getElementById('monthScreenName').textContent=m?m.name:'';
+  document.getElementById('screen-home').classList.add('hidden');
+  document.getElementById('screen-month').classList.remove('hidden');
+  setSyncStatus('syncing');
+  try{
+    const hs=await get(ref(db,`users/${UID}/months/${id}/habits`));
+    const qs=await get(ref(db,`users/${UID}/months/${id}/questions`));
+    const ds=await get(ref(db,`users/${UID}/months/${id}/days`));
+    currentMonth.habits=hs.exists()?hs.val():DEFAULT_HABITS;
+    currentMonth.questions=qs.exists()?qs.val():DEFAULT_QUESTIONS;
+    currentMonth.days=ds.exists()?ds.val():{};
+    setSyncStatus('synced');
+    currentDate=new Date(); currentDate.setHours(0,0,0,0);
+    viewMonth=new Date(today.getFullYear(),today.getMonth(),1);
+    switchTab('dag',document.querySelector('.tab'));
+    render();
+    initHabitListClicks();
+    populateGroupSelects();
+  }catch(e){setSyncStatus('error');}
+};
+
+window.goHome=function(){
+  const m=monthList.find(x=>x.id===currentMonthId);
+  if(m){
+    m.logged=Object.values(currentMonth.days).filter(d=>d&&Object.values(d.habits||{}).some(Boolean)).length;
+    fbSet('monthList',monthList);
+  }
+  document.getElementById('screen-month').classList.add('hidden');
+  document.getElementById('screen-home').classList.remove('hidden');
+  renderHome();
+};
+
+// DATE NAV
+window.changeDate=function(dir){
+  const nd=new Date(currentDate);
+  nd.setDate(nd.getDate()+dir);
+  if(nd>today)return;
+  currentDate=nd;
+  render();
+};
+
+window.switchTab=function(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('[id^="tab-"]').forEach(t=>t.classList.add('hidden'));
+  if(el)el.classList.add('active');
+  document.getElementById('tab-'+name).classList.remove('hidden');
+  if(name==='vecka')renderVecka();
+  if(name==='manad')renderManad();
+  if(name==='score')renderScoreTab();
+};
+
+window.toggleSection=function(id){
+  document.getElementById(id).classList.toggle('hidden');
+};
+
+function render(){
+  renderDateNav();
+  renderHabits();
+  renderQuestions();
+  renderDailyScore();
+}
+
+function renderDateNav(){
+  const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('dateDayLabel').textContent=DAYS[currentDate.getDay()];
+  document.getElementById('dateFullLabel').textContent=`${currentDate.getDate()} ${MONTHS[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+  const isToday=dk(currentDate)===dk(today);
+  document.getElementById('todayBadge').classList.toggle('hidden',!isToday);
+  document.getElementById('nextDateBtn').disabled=isToday;
+}
+
+// DAILY SCORE
+function getDailyScore(d){
+  const day=getDay(d);
+  const total=currentMonth.habits.length;
+  if(!total)return{done:0,total:0,pct:0};
+  const done=day.habits?Object.values(day.habits).filter(Boolean).length:0;
+  return{done,total,pct:Math.round(done/total*100)};
+}
+
+let trackingDays = JSON.parse(localStorage.getItem('hc-tracking-days')||'null') || [0,1,2,3,4,5,6]; // default: all 7 days
+function isTrackingDay(d){ return trackingDays.includes(d.getDay()); }
+function trackingDaysCount(){ return trackingDays.length || 1; }
+const DAY_LABELS_SHORT=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function trackingDaysSummary(){
+  if(trackingDays.length===7) return 'every day';
+  const order=[1,2,3,4,5,6,0]; // Mon..Sun
+  return order.filter(d=>trackingDays.includes(d)).map(d=>DAY_LABELS_SHORT[d]).join(', ');
+}
+
+function renderDailyScore(){
+  if(!isTrackingDay(currentDate)){
+    document.getElementById('dailyScoreNum').textContent='—';
+    document.getElementById('dailyScoreNum').style.color='var(--text-dim)';
+    document.getElementById('dailyFill').style.width='0%';
+    document.getElementById('dailyMeta').textContent='Rest day — tracked days are '+trackingDaysSummary();
+    return;
+  }
+  const s=getDailyScore(currentDate);
+  const el=document.getElementById('dailyScoreNum');
+  el.textContent=s.total?s.pct+'%':'—';
+  el.style.color=s.pct>=80?'var(--gold)':s.pct>=50?'var(--green-bright)':s.pct>0?'var(--text)':'var(--text-dim)';
+  document.getElementById('dailyFill').style.width=s.pct+'%';
+  document.getElementById('dailyFill').style.background=s.pct>=80?'var(--gold)':s.pct>=50?'var(--green)':'var(--red)';
+  const dp=getDailyPoints(currentDate);
+  const pointsColor=dp.points>0?'var(--green-bright)':dp.points<0?'var(--red-bright)':'var(--text-dim)';
+  const pointsStr=dp.points>0?'+'+dp.points:dp.points;
+  document.getElementById('dailyMeta').innerHTML=`${s.done} of ${s.total} habits completed &nbsp;·&nbsp; <span style="color:${pointsColor}">${pointsStr} pts</span>`;
+}
+
+// HABITS — grouped by time of day
+function getStreak(habitId){
+  let streak=0,d=new Date(currentDate);
+  while(true){const day=getDay(d);if(day.habits&&day.habits[habitId]){streak++;d.setDate(d.getDate()-1);}else break;if(streak>365)break;}
+  return streak;
+}
+
+// Consecutive MISSED tracking days for a habit, ending the day before refDate.
+// Skips non-tracking days (Fri/Sat/Sun). Stops counting once a completed day is hit.
+// Escalation only starts counting from a chosen date — nothing before that counts as a miss.
+// Computed once and saved so it stays fixed instead of drifting forward on every reload.
+// Clients can change this anytime in Settings.
+function getEscalationStart(){
+  const saved = localStorage.getItem('hc-escalation-start');
+  if(saved) return new Date(saved);
+  const d=new Date(today);
+  const dow=d.getDay(); // 0=Sun..6=Sat
+  const diff = dow===1 ? 0 : ((8-dow)%7); // days until the next Monday (0 if today is Monday)
+  d.setDate(d.getDate()+diff);
+  d.setHours(0,0,0,0);
+  localStorage.setItem('hc-escalation-start', d.toISOString());
+  return d;
+}
+let ESCALATION_START = getEscalationStart();
+window.setEscalationStart = function(dateStr){
+  if(!dateStr) return;
+  const d = new Date(dateStr+'T00:00:00');
+  if(isNaN(d.getTime())) return;
+  ESCALATION_START = d;
+  localStorage.setItem('hc-escalation-start', d.toISOString());
+  renderDailyScore();
+  renderHabits();
+  showToast('Miss-counting start date updated ✓');
+};
+
+function getMissStreakBefore(habitId, refDate){
+  let streak=0, d=new Date(refDate);
+  d.setDate(d.getDate()-1);
+  let guard=0;
+  const MAX_STREAK=6; // cap escalation at a week's worth of tracking days
+  while(guard<MAX_STREAK+30){ // small buffer for skipped weekends, still tightly bounded
+    if(d<ESCALATION_START) break; // don't count anything before the reset point
+    guard++;
+    if(!isTrackingDay(d)){ d.setDate(d.getDate()-1); continue; }
+    const day=getDay(d);
+    if(day.habits && day.habits[habitId]) break; // completed — streak ends
+    streak++;
+    if(streak>=MAX_STREAK) break; // stop escalating past the cap
+    d.setDate(d.getDate()-1);
+  }
+  return Math.min(streak, MAX_STREAK);
+}
+
+// Penalty for a habit if missed on `date`: escalates by consecutive prior misses,
+// capped at -7 so a long-neglected habit doesn't blow out the score.
+function getMissPenalty(habitId, date){
+  return Math.min(getMissStreakBefore(habitId, date) + 1, 7);
+}
+
+// Total weighted points for a day: +1 per completed habit, escalating negative
+// per missed habit based on how many tracking days in a row it's been skipped.
+function getDailyPoints(d){
+  if(!isTrackingDay(d)) return {points:0, total:0};
+  const day=getDay(d);
+  let points=0;
+  const total=currentMonth.habits.length;
+  currentMonth.habits.forEach(h=>{
+    const done = day.habits && day.habits[h.id];
+    if(done) points+=1;
+    else points-=getMissPenalty(h.id, d);
+  });
+  return {points, total};
+}
+
+function renderHabits(){
+  const day=getDay(currentDate);
+  const list=document.getElementById('habitList');
+  if(!isTrackingDay(currentDate)){
+    const workoutHabit = currentMonth.habits.find(h=>h.id==='h_m12');
+    if(!workoutHabit){
+      list.innerHTML='<div style="color:var(--text-dim);font-size:13px;padding:20px 0;text-align:center">Rest day</div>';
+      return;
+    }
+    const done=day.habits&&day.habits[workoutHabit.id];
+    const wpOpen=workoutPanelOpen;
+    const _openLabel='<span class="wp-open-label" style="font-size:10px;color:#9c7a1f;margin-left:4px">↓ open</span>';
+    let html=`<div style="color:var(--text-dim);font-size:13px;padding:8px 0 14px;text-align:center">Rest day — other habits aren't tracked, but you can still log a workout</div>`;
+    html+=`<div class="habit-item ${done?'done':''}${wpOpen?' workout-open':''}" data-id="${workoutHabit.id}" data-group="${workoutHabit.group||'morning'}" data-is-workout="1">
+      <div class="habit-check" data-check-id="${workoutHabit.id}">${done?'✓':''}</div>
+      <div class="habit-name">${workoutHabit.name} ${_openLabel}</div>
+    </div>`;
+    html+=`<div id="workoutPanel" class="workout-panel${workoutPanelOpen?' open':''}"><div class="wp-inner" id="workoutPanelInner"></div></div>`;
+    list.innerHTML=html;
+    if(workoutPanelOpen) renderWorkoutPanel();
+    return;
+  }
+  if(!currentMonth.habits.length){list.innerHTML='<div style="color:var(--text-dim);font-size:13px;padding:10px 0">No habits — add via ⚙ below</div>';return;}
+
+  const groups=habitGroupOrder.filter(g=>g!=='night');
+  let html='';
+  groups.forEach(g=>{
+    const habits=currentMonth.habits.filter(h=>{
+      let hg=h.group||'morning';
+      if(hg==='night')hg='morning'; // merge legacy "night" group into "morning" (First half)
+      return hg===g;
+    });
+    if(!habits.length)return;
+    const meta=getGroupMeta(g);
+    const doneCount=habits.filter(h=>day.habits&&day.habits[h.id]).length;
+    html+=`<div class="habit-group" data-group="${g}">
+      <div class="habit-group-header ${meta.cls}">
+        <div class="habit-group-dot"></div>
+        <div class="habit-group-label">${meta.label}</div>
+        <div class="habit-group-count">${doneCount}/${habits.length}</div>
+      </div>`;
+    habits.forEach(h=>{
+      const done=day.habits&&day.habits[h.id];
+      const streak=getStreak(h.id);
+      const isWorkout=h.id==='h_m12';
+      const wpOpen=isWorkout&&workoutPanelOpen;
+      const _openLabel=isWorkout?'<span class="wp-open-label" style="font-size:10px;color:#9c7a1f;margin-left:4px">↓ open</span>':'';
+      const _streak=streak>1?`<div class="habit-streak">🔥 ${streak}</div>`:'';
+      const missPenalty=!done?getMissPenalty(h.id,currentDate):0;
+      const _missWarn=(!done && missPenalty>=2)?`<div class="habit-miss-penalty">−${missPenalty}</div>`:'';
+      html+=`<div class="habit-item ${done?'done':''}${wpOpen?' workout-open':''}" data-id="${h.id}" data-group="${h.group||'morning'}" ${isWorkout?'data-is-workout="1"':''}>
+        <div class="drag-handle" title="Drag to reorder">⋮⋮</div>
+        <div class="habit-check" data-check-id="${h.id}">${done?'✓':''}</div>
+        <div class="habit-name">${h.name} ${_openLabel}</div>
+        ${_streak}
+        ${_missWarn}
+        <button class="icon-btn" data-edit-id="${h.id}" data-edit-name="${h.name}">✎</button>
+        <button class="icon-btn" data-delete-id="${h.id}">✕</button>
+      </div>`;
+      if(isWorkout){
+        html+=`<div id="workoutPanel" class="workout-panel${workoutPanelOpen?' open':''}"><div class="wp-inner" id="workoutPanelInner"></div></div>`;
+      }
+    });
+    html+='</div>';
+  });
+  list.innerHTML=html;
+  if(workoutPanelOpen) renderWorkoutPanel();
+  initDrag();
+}
+
+// Single delegated listener on habitList — set up once, not re-created on each render
+let _habitClicksInited = false;
+function initHabitListClicks(){
+  if(_habitClicksInited) return;
+  _habitClicksInited = true;
+  const list = document.getElementById('habitList');
+  list.addEventListener('click', e=>{
+if(e.target.closest('.drag-handle')) return;
+    const delBtn = e.target.closest('[data-delete-id]');
+    if(delBtn){ deleteHabit(delBtn.dataset.deleteId); return; }
+    const editBtn = e.target.closest('[data-edit-id]');
+    if(editBtn){ openEditHabit(editBtn.dataset.editId, editBtn.dataset.editName); return; }
+    const checkBtn = e.target.closest('[data-check-id]');
+    if(checkBtn){ toggleHabit(checkBtn.dataset.checkId); return; }
+    const item = e.target.closest('.habit-item');
+    if(!item) return;
+    if(item.dataset.isWorkout){
+      toggleWorkoutPanel();
+    } else {
+      toggleHabit(item.dataset.id);
+    }
+  });
+}
+
+// DRAG AND DROP
+let dragSrc=null,dragSrcId=null;
+
+function initDrag(){
+  const items=document.querySelectorAll('.habit-item');
+  items.forEach(item=>{
+    const handle=item.querySelector('.drag-handle');
+
+    // Desktop drag
+    item.setAttribute('draggable','false');
+    handle.addEventListener('mousedown',()=>{ item.setAttribute('draggable','true'); });
+    item.addEventListener('dragend',()=>{ item.setAttribute('draggable','false'); });
+
+    item.addEventListener('dragstart',e=>{
+      dragSrc=item;
+      dragSrcId=item.dataset.id;
+      e.dataTransfer.effectAllowed='move';
+      setTimeout(()=>item.classList.add('dragging'),0);
+    });
+    item.addEventListener('dragend',()=>{
+      item.classList.remove('dragging');
+      document.querySelectorAll('.habit-item').forEach(i=>i.classList.remove('drag-over'));
+    });
+    item.addEventListener('dragover',e=>{
+      if(!dragSrc) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+      if(item!==dragSrc) item.classList.add('drag-over');
+    });
+    item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));
+    item.addEventListener('drop',e=>{
+      e.preventDefault();
+      if(!dragSrc||dragSrc===item)return;
+      item.classList.remove('drag-over');
+      const srcId=dragSrcId;
+      const tgtId=item.dataset.id;
+      reorderHabits(srcId,tgtId);
+    });
+
+    // Touch drag
+    let touchStartY=0,touchItem=null,clone=null;
+    handle.addEventListener('touchstart',e=>{
+      touchItem=item;
+      touchStartY=e.touches[0].clientY;
+      item.classList.add('dragging');
+      clone=item.cloneNode(true);
+      clone.style.cssText=`position:fixed;left:${item.getBoundingClientRect().left}px;top:${item.getBoundingClientRect().top}px;width:${item.offsetWidth}px;opacity:.8;z-index:999;pointer-events:none;background:var(--surface2);border:1px solid var(--gold-dim);border-radius:10px;`;
+      document.body.appendChild(clone);
+    },{passive:true});
+
+    handle.addEventListener('touchmove',e=>{
+      if(!touchItem)return;
+      e.preventDefault();
+      const t=e.touches[0];
+      clone.style.top=(t.clientY-touchItem.offsetHeight/2)+'px';
+      document.querySelectorAll('.habit-item').forEach(i=>i.classList.remove('drag-over'));
+      const els=document.elementsFromPoint(t.clientX,t.clientY);
+      const target=els.find(el=>el.classList.contains('habit-item')&&el!==touchItem);
+      if(target)target.classList.add('drag-over');
+    },{passive:false});
+
+    handle.addEventListener('touchend',e=>{
+      if(!touchItem)return;
+      if(clone){clone.remove();clone=null;}
+      touchItem.classList.remove('dragging');
+      document.querySelectorAll('.habit-item').forEach(i=>i.classList.remove('drag-over'));
+      const t=e.changedTouches[0];
+      const els=document.elementsFromPoint(t.clientX,t.clientY);
+      const target=els.find(el=>el.classList.contains('habit-item')&&el!==touchItem);
+      if(target) reorderHabits(touchItem.dataset.id,target.dataset.id);
+      touchItem=null;
+    });
+  });
+}
+
+async function reorderHabits(srcId,tgtId){
+  const srcIdx=currentMonth.habits.findIndex(h=>h.id===srcId);
+  const tgtIdx=currentMonth.habits.findIndex(h=>h.id===tgtId);
+  if(srcIdx===-1||tgtIdx===-1)return;
+  const [moved]=currentMonth.habits.splice(srcIdx,1);
+  currentMonth.habits.splice(tgtIdx,0,moved);
+  renderHabits();
+  renderDailyScore();
+  await fbSet(`months/${currentMonthId}/habits`,currentMonth.habits);
+}
+
+window.toggleHabit=async function(id){
+  const dow=currentDate.getDay();
+  const isWorkoutHabit = id==='h_m12';
+  if(!isWorkoutHabit && !isTrackingDay(currentDate)){showToast('Only tracked on: '+trackingDaysSummary());return;}
+  const day=getDay(currentDate);
+  if(!day.habits)day.habits={};
+  day.habits[id]=!day.habits[id];
+  currentMonth.days[dk(currentDate)]=day;
+  renderHabits();
+  renderDailyScore();
+  await fbSet(`months/${currentMonthId}/days/${dk(currentDate)}`,day);
+};
+
+window.addHabit=async function(){
+  const input=document.getElementById('newHabitInput');
+  const groupSel=document.getElementById('newHabitGroup');
+  const name=input.value.trim();
+  if(!name)return;
+  const group=groupSel?groupSel.value:'morning';
+  currentMonth.habits.push({id:'h'+Date.now(),name,group});
+  input.value='';
+  renderHabits();
+  await fbSet(`months/${currentMonthId}/habits`,currentMonth.habits);
+  showToast('Habit added ✓');
+};
+
+window.deleteHabit=async function(id){
+  currentMonth.habits=currentMonth.habits.filter(h=>h.id!==id);
+  renderHabits();
+  renderDailyScore();
+  await fbSet(`months/${currentMonthId}/habits`,currentMonth.habits);
+  showToast('Habit removed');
+};
+
+// QUESTIONS
+function renderQuestions(){
+  const day=getDay(currentDate);
+  const list=document.getElementById('questionList');
+  if(!currentMonth.questions.length){list.innerHTML='<div style="color:var(--text-dim);font-size:13px;padding:8px 0">No questions — add via ⚙ below</div>';return;}
+  list.innerHTML=currentMonth.questions.map(q=>{
+    const ans=day.reflection&&day.reflection[q.id]?day.reflection[q.id]:'';
+    return `<div class="question-block">
+      <div class="q-header">
+        <div class="q-label">${q.text}</div>
+        <button class="q-delete" onclick="deleteQuestion('${q.id}')">✕</button>
+      </div>
+      <textarea class="reflection-area" id="ans_${q.id}" placeholder="Your answer...">${ans}</textarea>
+    </div>`;
+  }).join('');
+}
+
+window.addQuestion=async function(){
+  const input=document.getElementById('newQuestionInput');
+  const text=input.value.trim();
+  if(!text)return;
+  currentMonth.questions.push({id:'q'+Date.now(),text});
+  input.value='';
+  renderQuestions();
+  await fbSet(`months/${currentMonthId}/questions`,currentMonth.questions);
+  showToast('Question added ✓');
+};
+
+window.deleteQuestion=async function(id){
+  currentMonth.questions=currentMonth.questions.filter(q=>q.id!==id);
+  renderQuestions();
+  await fbSet(`months/${currentMonthId}/questions`,currentMonth.questions);
+  showToast('Question removed');
+};
+
+window.saveReflection=async function(){
+  const day=getDay(currentDate);
+  if(!day.reflection)day.reflection={};
+  currentMonth.questions.forEach(q=>{
+    const el=document.getElementById('ans_'+q.id);
+    if(el)day.reflection[q.id]=el.value;
+  });
+  currentMonth.days[dk(currentDate)]=day;
+  await fbSet(`months/${currentMonthId}/days/${dk(currentDate)}`,day);
+  showToast('Reflection saved ✓');
+};
+
+// SCORE TAB — daily score based net
+function getWeekNetScore(){
+  let pos=0,neg=0;
+  const mon=getMonday(currentDate);
+  for(let i=0;i<7;i++){
+    const d=new Date(mon);d.setDate(d.getDate()+i);
+    if(d>today)break;
+    if(!isTrackingDay(d))continue;
+    const s=getDailyScore(d);
+    if(s.total===0)continue;
+    const dp=getDailyPoints(d);
+    if(dp.points>0)pos++;else neg++;
+  }
+  return{pos,neg};
+}
+
+function renderScoreTab(){
+  const ws=getWeekNetScore();
+  const score=ws.pos-ws.neg;
+  const goal=trackingDaysCount();
+  const el=document.getElementById('scoreNumber');
+  el.textContent=score>0?'+'+score:score;
+  el.style.color=score>=goal?'var(--gold)':score>0?'var(--green-bright)':score<0?'var(--red-bright)':'var(--text)';
+  const pct=Math.min(100,Math.max(0,(score/goal)*100));
+  const fill=document.getElementById('weeklyFill');
+  fill.style.width=pct+'%';
+  fill.style.background=score>=goal?'var(--gold)':score>0?'var(--green)':'var(--red)';
+  document.getElementById('weeklyProgress').textContent=`${score} of ${goal}`;
+  const goalLabel=document.getElementById('weeklyGoalLabel');
+  if(goalLabel) goalLabel.textContent=`Goal: +${goal} per week`;
+
+  // Weekly stats
+  const mon=getMonday(currentDate);
+  let bestDay=0,totalPct=0,counted=0;
+  for(let i=0;i<7;i++){
+    const d=new Date(mon);d.setDate(d.getDate()+i);
+    if(d>today)break;
+    const s=getDailyScore(d);
+    if(s.total>0){totalPct+=s.pct;counted++;if(s.pct>bestDay)bestDay=s.pct;}
+  }
+  const avgPct=counted>0?Math.round(totalPct/counted):0;
+  document.getElementById('scoreStats').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${avgPct}%</div><div class="stat-lbl">Avg daily score</div></div>
+    <div class="stat-card"><div class="stat-num">${bestDay}%</div><div class="stat-lbl">Best day</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:${score>=goal?'var(--gold)':score>0?'var(--green-bright)':'var(--red-bright)'}">${score>0?'+':''}${score}</div><div class="stat-lbl">Weekly net</div></div>
+    <div class="stat-card"><div class="stat-num">${ws.pos}</div><div class="stat-lbl">Positive days</div></div>`;
+}
+
+// GRAPH
+function drawGraph(containerId,daysData,maxVal){
+  const container=document.getElementById(containerId);
+  if(!container)return;
+  const n=daysData.length;
+  const W=350,H=100,pL=26,pR=6,pT=8,pB=22;
+  const cW=W-pL-pR,cH=H-pT-pB;
+  const slotW=cW/n;
+  const barW=Math.max(4,slotW*0.65);
+  const max=maxVal||100;
+  let html=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  [0,50,100].forEach(v=>{
+    const y=pT+cH-(v/max)*cH;
+    html+=`<line x1="${pL}" y1="${y}" x2="${W-pR}" y2="${y}" stroke="#ddd2b0" stroke-width="1"/>`;
+    html+=`<text x="2" y="${y+3.5}" fill="#7a7262" font-size="8" font-family="Outfit,sans-serif">${v}</text>`;
+  });
+  daysData.forEach((d,i)=>{
+    const x=pL+i*slotW+(slotW-barW)/2;
+    const bh=d.isFuture?0:Math.max(d.val>0?2:0,(d.val/max)*cH);
+    const by=pT+cH-bh;
+    let color='#ece3cc';
+    if(!d.isFuture&&d.val>0)color=d.val>=80?'#2f8f5b':d.val>=50?'#9c7a1f':'#c14444';
+    if(!d.isFuture)html+=`<rect x="${x}" y="${by}" width="${barW}" height="${bh}" rx="2" fill="${color}"/>`;
+    if(!d.isFuture&&d.val>0)html+=`<text x="${x+barW/2}" y="${by-2}" fill="${color}" font-size="8" font-family="Outfit,sans-serif" text-anchor="middle">${d.val}</text>`;
+    html+=`<text x="${x+barW/2}" y="${H-4}" fill="#7a7262" font-size="8" font-family="Outfit,sans-serif" text-anchor="middle">${d.label}</text>`;
+  });
+  html+='</svg>';
+  container.innerHTML=html;
+}
+
+// WEEK
+function renderVecka(){
+  const mon=getMonday(currentDate);
+  const dayNames=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  let graphData=[],totalDone=0,totalHabits=0,dLogged=0;
+  const grid=document.getElementById('weekGrid');
+  grid.innerHTML=dayNames.map((label,i)=>{
+    const d=new Date(mon);d.setDate(d.getDate()+i);
+    const isFuture=d>today,isToday=dk(d)===dk(today);
+    const isRest=!isTrackingDay(d);
+    const s=getDailyScore(d);
+    const hasData=s.done>0||(getDay(d).reflection&&Object.values(getDay(d).reflection).some(v=>v));
+    if(!isFuture&&!isRest&&s.total>0){totalDone+=s.done;totalHabits+=s.total;if(hasData)dLogged++;}
+    graphData.push({label,val:isRest?0:s.pct,isFuture:isFuture||isRest,hasData});
+    let cls='wdot'+(isFuture?' future':isRest?' future':isToday?' today':hasData?' has-data':'');
+    const lbl=isRest?'–':(s.total>0&&!isFuture?s.pct+'%':d.getDate());
+    return `<div class="wday"><div class="wday-label">${label}</div><div class="${cls}" onclick="goToDay(${d.getTime()})">${lbl}</div></div>`;
+  }).join('');
+  drawGraph('weekGraphContainer',graphData,100);
+  const ws=getWeekNetScore(),netScore=ws.pos-ws.neg;
+  const avgPct=totalHabits>0?Math.round(totalDone/totalHabits*100):0;
+  document.getElementById('weekStats').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${avgPct}%</div><div class="stat-lbl">Avg completion</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:${netScore>=trackingDaysCount()?'var(--gold)':netScore>0?'var(--green-bright)':'var(--red-bright)'}">${netScore>0?'+':''}${netScore}${netScore>=trackingDaysCount()?' 🏆':''}</div><div class="stat-lbl">Weekly net</div></div>
+    <div class="stat-card"><div class="stat-num">${dLogged}</div><div class="stat-lbl">Days logged</div></div>
+    <div class="stat-card"><div class="stat-num">${ws.pos}</div><div class="stat-lbl">Positive days</div></div>`;
+  const DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const MONTHS_EN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let reflHtml='';
+  for(let i=0;i<7;i++){
+    const d=new Date(mon);d.setDate(d.getDate()+i);
+    if(d>today)break;
+    const day=getDay(d);
+    const hasRefl=day.reflection&&Object.values(day.reflection).some(v=>v&&v.trim());
+    if(!hasRefl)continue;
+    reflHtml+=`<div class="week-refl-day">
+      <div class="week-refl-header">${DAYS_EN[d.getDay()]} ${d.getDate()} ${MONTHS_EN[d.getMonth()]}</div>`;
+    currentMonth.questions.forEach(q=>{
+      const ans=day.reflection[q.id];
+      if(ans&&ans.trim()){
+        reflHtml+=`<div class="week-refl-item"><div class="week-refl-q">${q.text}</div><div class="week-refl-a">${ans}</div></div>`;
+      }
+    });
+    reflHtml+='</div>';
+  }
+  document.getElementById('weekReflections').innerHTML=reflHtml||'<div style="color:var(--text-dim);font-size:13px;padding:10px 0">No reflections written this week.</div>';
+}
+
+// MONTH
+let calViewMonth=null;
+window.changeViewMonth=function(dir){
+  calViewMonth=new Date(calViewMonth.getFullYear(),calViewMonth.getMonth()+dir,1);
+  renderManad();
+};
+
+function renderManad(){
+  if(!calViewMonth)calViewMonth=new Date(today.getFullYear(),today.getMonth(),1);
+  const MONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAYS_SHORT=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  document.getElementById('calMonthTitle').textContent=`${MONTHS_EN[calViewMonth.getMonth()]} ${calViewMonth.getFullYear()}`;
+  const firstDay=new Date(calViewMonth.getFullYear(),calViewMonth.getMonth(),1);
+  const lastDay=new Date(calViewMonth.getFullYear(),calViewMonth.getMonth()+1,0);
+  const startDow=firstDay.getDay()===0?6:firstDay.getDay()-1;
+  let calHtml=DAYS_SHORT.map(d=>`<div class="cal-header">${d}</div>`).join('');
+  for(let i=0;i<startDow;i++)calHtml+='<div class="cal-day empty"></div>';
+  let graphData=[],totalDone=0,totalHabits=0,dLogged=0,posDays=0,negDays=0;
+  const missCounts={};
+  for(let day=1;day<=lastDay.getDate();day++){
+    const d=new Date(calViewMonth.getFullYear(),calViewMonth.getMonth(),day);
+    d.setHours(0,0,0,0);
+    const isFuture=d>today,isToday=dk(d)===dk(today);
+    const s=getDailyScore(d);
+    const dayObj=getDay(d);
+    const hasData=s.done>0||(dayObj.reflection&&Object.values(dayObj.reflection).some(v=>v));
+    if(!isFuture&&s.total>0&&isTrackingDay(d)){
+      totalDone+=s.done;totalHabits+=s.total;if(hasData)dLogged++;
+      const dp=getDailyPoints(d);if(dp.points>0)posDays++;else negDays++;
+      currentMonth.habits.forEach(h=>{
+        const wasDone=dayObj.habits&&dayObj.habits[h.id];
+        if(!wasDone) missCounts[h.id]=(missCounts[h.id]||0)+1;
+      });
+    }
+    graphData.push({label:String(day),val:s.pct,isFuture});
+    let cls='cal-day'+(isFuture?' future':isToday?' today':hasData?' has-data':'');
+    calHtml+=`<div class="${cls}" onclick="goToDay(${d.getTime()})"><div class="cal-num">${day}</div>${hasData&&!isFuture?'<div class="cal-dot"></div>':''}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML=calHtml;
+  drawGraph('monthGraphContainer',graphData,100);
+  const avgPct=totalHabits>0?Math.round(totalDone/totalHabits*100):0;
+  const netScore=posDays-negDays;
+  document.getElementById('monthStats').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${dLogged}</div><div class="stat-lbl">Days logged</div></div>
+    <div class="stat-card"><div class="stat-num">${avgPct}%</div><div class="stat-lbl">Avg completion</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:${netScore>=0?'var(--green-bright)':'var(--red-bright)'}">${netScore>0?'+':''}${netScore}</div><div class="stat-lbl">Monthly net</div></div>
+    <div class="stat-card"><div class="stat-num">${posDays}</div><div class="stat-lbl">Positive days</div></div>`;
+
+  const missedList=document.getElementById('mostMissedList');
+  if(missedList){
+    const ranked=Object.entries(missCounts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const maxCount=ranked.length?ranked[0][1]:1;
+    if(!ranked.length){
+      missedList.innerHTML='<div style="color:var(--text-dim);font-size:13px;padding:8px 0">No misses this month yet.</div>';
+    } else {
+      missedList.innerHTML=ranked.map(([hid,count])=>{
+        const h=currentMonth.habits.find(x=>x.id===hid);
+        if(!h)return '';
+        const pct=Math.round(count/maxCount*100);
+        return `<div class="missed-item">
+          <div class="missed-name">${h.name}</div>
+          <div class="missed-bar-track"><div class="missed-bar-fill" style="width:${pct}%"></div></div>
+          <div class="missed-count">${count}x</div>
+        </div>`;
+      }).join('');
+    }
+  }
+}
+
+window.goToDay=function(ts){
+  const d=new Date(ts);d.setHours(0,0,0,0);
+  currentDate=d;
+  const firstTab=document.querySelector('.tab');
+  switchTab('dag',firstTab);
+  render();
+};
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+
+// ══ EMBEDDED WORKOUT ENGINE ══
+let workoutPanelOpen = false;
+const WLS = (k,d) => { try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch{return d;} };
+const WSS = (k,v) => localStorage.setItem(k,JSON.stringify(v));
+
+let wpSeason = localStorage.getItem('wt-season')||'winter';
+
+const WK = {
+  get done()         { return `wt-${wpSeason}-done`; },
+  get open()         { return `wt-${wpSeason}-open`; },
+  get sel()          { return `wt-${wpSeason}-sel`; },
+  get cardioChecks() { return `wt-${wpSeason}-cardio-checks`; },
+  get cycle()        { return `wt-${wpSeason}-cycle`; },
+  get gymPresets()   { return `wt-${wpSeason}-gym-presets`; },
+  get cardioPresets(){ return `wt-${wpSeason}-cardio-presets`; },
+};
+
+const WP_DEFAULT_CYCLE_WINTER = [
+  {id:1,name:'Workout',group:'gym'},{id:2,name:'Cardio',group:'cardio'},
+  {id:3,name:'Workout',group:'gym'},{id:4,name:'Cardio',group:'cardio'},
+];
+const WP_DEFAULT_CYCLE_SUMMER = [
+  {id:1,name:'Workout',group:'gym'},{id:2,name:'Cardio',group:'cardio'},
+  {id:3,name:'Workout',group:'gym'},{id:4,name:'Cardio',group:'cardio'},
+];
+const WP_DEFAULT_SEL_WINTER = {1:'Full body',2:'Steady state',3:'Full body',4:'Steady state'};
+const WP_DEFAULT_SEL_SUMMER = {1:'Outdoor',2:'Run',3:'Outdoor',4:'Run'};
+
+const WP_DEFAULT_GYM_WINTER = [
+  {name:'Full body',blocks:[{type:'label',text:'Warm-up'},{type:'single',text:'5 minutes light cardio'},{type:'divider'},{type:'label',text:'Main sets'},{type:'pair',a:'Squats',b:'Push-ups'},{type:'pair',a:'Rows',b:'Lunges'},{type:'pair',a:'Plank',b:'Glute bridge'},{type:'divider'},{type:'label',text:'Finisher'},{type:'single',text:'Stretch & cool down'}]},
+];
+const WP_DEFAULT_GYM_SUMMER = [
+  {name:'Outdoor',blocks:[{type:'label',text:'Warm-up'},{type:'single',text:'Light jog or brisk walk'},{type:'divider'},{type:'label',text:'Main sets'},{type:'pair',a:'Push-ups',b:'Bodyweight squats'},{type:'pair',a:'Lunges',b:'Plank'},{type:'single',text:'Bench dips (park bench or step)'},{type:'divider'},{type:'label',text:'Finisher'},{type:'single',text:'Stretch outdoors'}]},
+];
+const WP_DEFAULT_CARDIO_SUMMER = [
+  {name:'Run',options:['Outdoor run','Hike','Beach walk','Bike ride','Swim']},
+];
+const WP_DEFAULT_CARDIO_WINTER = [
+  {name:'Steady state',options:['Running','Cycling','Swimming','Walking','Rowing']},
+];
+
+let wpDone, wpOpen, wpSel, wpCardioChecks, wpCycle, wpGymPresets, wpCardioPresets;
+
+function wpLoadState(){
+  const isSummer = wpSeason==='summer';
+  const defCycle = isSummer ? WP_DEFAULT_CYCLE_SUMMER : WP_DEFAULT_CYCLE_WINTER;
+  const defSel   = isSummer ? WP_DEFAULT_SEL_SUMMER   : WP_DEFAULT_SEL_WINTER;
+  const defGym   = isSummer ? WP_DEFAULT_GYM_SUMMER   : WP_DEFAULT_GYM_WINTER;
+  const defCardio= isSummer ? WP_DEFAULT_CARDIO_SUMMER : WP_DEFAULT_CARDIO_WINTER;
+  wpDone         = WLS(WK.done,[]);
+  wpOpen         = WLS(WK.open,[]);
+  wpSel          = WLS(WK.sel,null); if(!wpSel){wpSel={...defSel};WSS(WK.sel,wpSel);}
+  wpCardioChecks = WLS(WK.cardioChecks,{});
+  wpCycle        = WLS(WK.cycle,null); if(!wpCycle){wpCycle=JSON.parse(JSON.stringify(defCycle));WSS(WK.cycle,wpCycle);}
+  wpGymPresets   = WLS(WK.gymPresets,null); if(!wpGymPresets){wpGymPresets=JSON.parse(JSON.stringify(defGym));WSS(WK.gymPresets,wpGymPresets);}
+  wpCardioPresets= WLS(WK.cardioPresets,null); if(!wpCardioPresets){wpCardioPresets=JSON.parse(JSON.stringify(defCardio));WSS(WK.cardioPresets,wpCardioPresets);}
+}
+// Force reset workout state to new defaults if version changed
+const WP_VERSION = '4';
+if(localStorage.getItem('wt-version') !== WP_VERSION) {
+  ['winter','summer'].forEach(s => {
+    localStorage.removeItem(`wt-${s}-cycle`);
+    localStorage.removeItem(`wt-${s}-gym-presets`);
+    localStorage.removeItem(`wt-${s}-cardio-presets`);
+    localStorage.removeItem(`wt-${s}-sel`);
+  });
+  localStorage.setItem('wt-version', WP_VERSION);
+}
+wpLoadState();
+
+let _lastToggle = 0;
+window.toggleWorkoutPanel = function(){
+  const now = Date.now();
+  if(now - _lastToggle < 400) return;
+  _lastToggle = now;
+  workoutPanelOpen = !workoutPanelOpen;
+  const panel = document.getElementById('workoutPanel');
+  if(!panel) return;
+  panel.classList.toggle('open', workoutPanelOpen);
+  if(workoutPanelOpen){
+    try{ renderWorkoutPanel(); }
+    catch(err){ console.error('[HC] renderWorkoutPanel error:', err); }
+  }
+  const label = document.querySelector('[data-is-workout="1"] .wp-open-label');
+  if(label) label.textContent = workoutPanelOpen ? '↑ close' : '↓ open';
+};
+
+window.wpSetSeason = function(s){
+  wpSeason = s;
+  localStorage.setItem('wt-season', s);
+  wpLoadState();
+  renderWorkoutPanel();
+};
+
+function wpBlocksHTML(blocks, presetName){
+  let h='';
+  (blocks||[]).forEach(b=>{
+    if(b.type==='label') h+=`<div class="wp-ex-label">${b.text}</div>`;
+    else if(b.type==='single') h+=`<div class="wp-ex-single">${b.text}</div>`;
+    else if(b.type==='pair') h+=`<div class="wp-ex-pair"><span>${b.a}</span><span>${b.b}</span></div>`;
+    else if(b.type==='divider') h+=`<div class="wp-divider"></div>`;
+    else if(b.type==='warmup-pick'){
+      const cur=localStorage.getItem('wp-'+presetName);
+      h+=`<div class="wp-warmup-pick" data-wpkey="wp-${presetName}">
+        <div class="wp-wp-option${cur==='sled'?' wp-sel':''}" data-val="sled" data-wpkey="wp-${presetName}"><div class="wp-wp-radio"><div class="wp-wp-dot"></div></div><span>Sled</span></div>
+        <div class="wp-wp-option${cur==='handstand'?' wp-sel':''}" data-val="handstand" data-wpkey="wp-${presetName}"><div class="wp-wp-radio"><div class="wp-wp-dot"></div></div><span>Handstand</span></div>
+      </div>`;
+    }
+  });
+  return h;
+}
+
+function renderWorkoutPanel(){
+  const el = document.getElementById('workoutPanelInner');
+  if(!el) return;
+  const n = wpDone.length;
+  const total = wpCycle.length;
+  const SVG_CHECK = `<svg width="8" height="8" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2L7.5 2" stroke="#0f0f0f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const SVG_CHEVRON = `<svg class="wp-chevron" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  let html = `
+    <div class="wp-season-toggle">
+      ${wpSeason==='summer'?`
+      <button class="wp-season-btn active-summer" onclick="wpSetSeason('summer')">☀ Summer</button>
+      <button class="wp-season-btn" onclick="wpSetSeason('winter')">❄ Winter</button>
+      `:`
+      <button class="wp-season-btn active-winter" onclick="wpSetSeason('winter')">❄ Winter</button>
+      <button class="wp-season-btn" onclick="wpSetSeason('summer')">☀ Summer</button>
+      `}
+    </div>
+    <div class="wp-header-label">Health cycle — ${wpSeason.charAt(0).toUpperCase()+wpSeason.slice(1)}</div>
+    <div class="wp-count">${n} / ${total}</div>
+    <div class="wp-progress-bar"><div class="wp-progress-fill" style="width:${total?n/total*100:0}%"></div></div>
+    <div class="wp-section-title">Workouts</div>
+    <div class="wp-list" id="wpList">`;
+
+  wpCycle.forEach((slot,idx)=>{
+    const isDone = wpDone.includes(slot.id);
+    const isOpen = wpOpen.includes(slot.id);
+    const sel = wpSel[slot.id]||null;
+    const numStr = String(idx+1).padStart(2,'0');
+    const checks = wpCardioChecks[slot.id]||[];
+    const subLabel = sel?(sel+(checks.length?' · '+checks.join(', '):'')):''
+
+    let dropHTML = '';
+    if(slot.group==='gym'){
+      dropHTML = `<div class="wp-dd-label">Select workout</div><div class="wp-options">`;
+      wpGymPresets.forEach(p=>{
+        const isSel = sel===p.name;
+        dropHTML += `<div class="wp-option${isSel?' selected':''}" data-wp-preset="${p.name}" data-wp-slot="${slot.id}" data-wp-kind="gym">
+          <div class="wp-radio"><div class="wp-radio-dot"></div></div>
+          <span class="wp-option-text">${p.name}</span>
+        </div>`;
+        if(p.blocks&&p.blocks.length) dropHTML+=`<div class="wp-sub-detail${isSel?' visible':''}">${wpBlocksHTML(p.blocks,p.name)}</div>`;
+      });
+      dropHTML += `</div>`;
+    } else if(slot.group==='cardio'){
+      dropHTML = `<div class="wp-dd-label">Select type</div><div class="wp-options">`;
+      wpCardioPresets.forEach(p=>{
+        const isSel = sel===p.name;
+        dropHTML += `<div class="wp-option${isSel?' selected':''}" data-wp-preset="${p.name}" data-wp-slot="${slot.id}" data-wp-kind="cardio">
+          <div class="wp-radio"><div class="wp-radio-dot"></div></div>
+          <span class="wp-option-text">${p.name}</span>
+        </div>`;
+        if(isSel&&p.options&&p.options.length){
+          dropHTML+=`<div class="wp-sub-detail visible"><div class="wp-dd-label" style="margin-bottom:4px">What did you do?</div><div class="wp-checks">`;
+          p.options.forEach(act=>{
+            dropHTML+=`<div class="wp-check-option${checks.includes(act)?' checked':''}" data-wp-act="${act}" data-wp-slot="${slot.id}">${SVG_CHECK}<span class="wp-check-text">${act}</span></div>`;
+          });
+          dropHTML+=`</div></div>`;
+        }
+      });
+      dropHTML += `</div>`;
+    }
+
+    const hasChevron = slot.group==='gym'||slot.group==='cardio';
+    html+=`<div class="wp-item${isDone?' done':''}${isOpen?' open':''}" data-wslot="${slot.id}">
+      <div class="wp-row">
+        <div class="wp-circle" data-wp-toggle="${slot.id}">${SVG_CHECK}</div>
+        <span class="wp-num">${numStr}</span>
+        <div class="wp-name-wrap">
+          <span class="wp-name">${slot.name}</span>
+          ${subLabel?`<span class="wp-sub">${subLabel}</span>`:''}
+        </div>
+        ${hasChevron?`<div data-wp-expand="${slot.id}">${SVG_CHEVRON}</div>`:''}
+      </div>
+      ${hasChevron?`<div class="wp-dropdown"><div class="wp-dd-inner">${dropHTML}</div></div>`:''}
+    </div>`;
+  });
+
+  html += `</div>
+    <div class="wp-reset-row">
+      <button class="wp-reset-btn" onclick="wpResetCycle()">Reset cycle</button>
+    </div>`;
+
+  el.innerHTML = html;
+
+  // Events
+  el.querySelectorAll('[data-wp-toggle]').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const id=parseInt(btn.dataset.wpToggle);
+      wpDone = wpDone.includes(id)?wpDone.filter(x=>x!==id):[...wpDone,id];
+      WSS(WK.done,wpDone);
+      // Auto-check the functional workout habit if any workout done
+      if(wpDone.length>0){
+        const day=getDay(currentDate);
+        if(!day.habits)day.habits={};
+        day.habits['h_m12']=true;
+        currentMonth.days[dk(currentDate)]=day;
+        renderHabits();renderDailyScore();
+        fbSet(`months/${currentMonthId}/days/${dk(currentDate)}`,day);
+      }
+      renderWorkoutPanel();
+    });
+  });
+  el.querySelectorAll('[data-wp-expand]').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const id=parseInt(btn.dataset.wpExpand);
+      wpOpen = wpOpen.includes(id)?wpOpen.filter(x=>x!==id):[...wpOpen,id];
+      WSS(WK.open,wpOpen);
+      renderWorkoutPanel();
+    });
+  });
+  el.querySelectorAll('.wp-row').forEach(row=>{
+    row.addEventListener('click',e=>{
+      if(e.target.closest('[data-wp-toggle]')||e.target.closest('[data-wp-expand]'))return;
+      const item=row.closest('[data-wslot]');
+      if(!item)return;
+      const id=parseInt(item.dataset.wslot);
+      const slot=wpCycle.find(s=>s.id===id);
+      if(!slot||(slot.group!=='gym'&&slot.group!=='cardio'))return;
+      wpOpen=wpOpen.includes(id)?wpOpen.filter(x=>x!==id):[...wpOpen,id];
+      WSS(WK.open,wpOpen);
+      renderWorkoutPanel();
+    });
+  });
+  el.querySelectorAll('[data-wp-preset]').forEach(opt=>{
+    opt.addEventListener('click',e=>{
+      e.stopPropagation();
+      const sid=parseInt(opt.dataset.wpSlot);
+      const name=opt.dataset.wpPreset;
+      wpSel[sid]=wpSel[sid]===name?null:name;
+      wpCardioChecks[sid]=[];
+      WSS(WK.sel,wpSel);WSS(WK.cardioChecks,wpCardioChecks);
+      renderWorkoutPanel();
+    });
+  });
+  el.querySelectorAll('[data-wp-act]').forEach(ch=>{
+    ch.addEventListener('click',e=>{
+      e.stopPropagation();
+      const sid=parseInt(ch.dataset.wpSlot);
+      const act=ch.dataset.wpAct;
+      const cur=wpCardioChecks[sid]||[];
+      wpCardioChecks[sid]=cur.includes(act)?cur.filter(x=>x!==act):[...cur,act];
+      WSS(WK.cardioChecks,wpCardioChecks);
+      renderWorkoutPanel();
+    });
+  });
+  el.querySelectorAll('.wp-wp-option').forEach(opt=>{
+    opt.addEventListener('click',e=>{
+      e.stopPropagation();
+      const key=opt.dataset.wpkey,val=opt.dataset.val;
+      localStorage.getItem(key)===val?localStorage.removeItem(key):localStorage.setItem(key,val);
+      renderWorkoutPanel();
+    });
+  });
+}
+
+window.wpResetCycle = function(){
+  const isSummer=wpSeason==='summer';
+  wpDone=[];wpSel={...(isSummer?WP_DEFAULT_SEL_SUMMER:WP_DEFAULT_SEL_WINTER)};wpCardioChecks={};
+  WSS(WK.done,wpDone);WSS(WK.sel,wpSel);WSS(WK.cardioChecks,wpCardioChecks);
+  renderWorkoutPanel();
+};
+// ══ END WORKOUT ENGINE ══
+
+// ══ HABIT SETTINGS ══
+let habitGroupOrder = JSON.parse(localStorage.getItem('hc-group-order')||'null') || ['morning','evening','general'];
+
+window.openHabitSettings = function(){
+  document.getElementById('habitSettingsOverlay').classList.remove('hidden');
+  populateGroupSelects();
+  switchSettingsTab('habits', document.querySelector('.settings-tab'));
+};
+window.closeHabitSettings = function(){
+  document.getElementById('habitSettingsOverlay').classList.add('hidden');
+};
+window.switchSettingsTab = function(name, el){
+  document.querySelectorAll('.settings-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.stab-content').forEach(t=>t.classList.add('hidden'));
+  if(el) el.classList.add('active');
+  document.getElementById('stab-'+name).classList.remove('hidden');
+  if(name==='habits') renderSettingsHabits();
+  if(name==='groups') renderSettingsGroups();
+  if(name==='days') renderSettingsDays();
+  if(name==='workout') renderWpSettings();
+};
+
+function renderSettingsDays(){
+  const el = document.getElementById('settingsDaysList');
+  const order=[1,2,3,4,5,6,0]; // Mon..Sun
+  el.innerHTML = `<div class="day-pill-row">${order.map(d=>{
+    const on = trackingDays.includes(d);
+    return `<div class="day-pill${on?' on':''}" data-day="${d}">${DAY_LABELS_SHORT[d]}</div>`;
+  }).join('')}</div>`;
+  el.querySelectorAll('.day-pill').forEach(pill=>{
+    pill.addEventListener('click', ()=>{
+      const d = parseInt(pill.dataset.day);
+      if(trackingDays.includes(d)){
+        if(trackingDays.length<=1) return; // keep at least one day selected
+        trackingDays = trackingDays.filter(x=>x!==d);
+      } else {
+        trackingDays = [...trackingDays, d];
+      }
+      localStorage.setItem('hc-tracking-days', JSON.stringify(trackingDays));
+      renderSettingsDays();
+      renderDailyScore();
+      renderHabits();
+    });
+  });
+  const escInput = document.getElementById('escalationStartInput');
+  if(escInput){
+    const d = ESCALATION_START;
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    escInput.value = `${yyyy}-${mm}-${dd}`;
+  }
+}
+
+let _settingsEditId = null;
+function renderSettingsHabits(){
+  const el = document.getElementById('settingsHabitList');
+  if(!currentMonth.habits.length){ el.innerHTML='<div style="color:var(--text-dim);font-size:13px">No habits yet</div>'; return; }
+  el.innerHTML = currentMonth.habits.map(h=>{
+    const g=h.group||'morning';
+    const tagCls=BUILTIN_GROUP_META[g]?'tag-'+g:'tag-custom';
+    const meta=getGroupMeta(g);
+    return `<div class="settings-item" data-sid="${h.id}">
+      <div class="settings-drag">⋮⋮</div>
+      <div style="flex:1">
+        <div class="settings-item-name">${h.name}</div>
+        <span class="settings-group-tag ${tagCls}">${meta.label}</span>
+      </div>
+      <button class="settings-edit-btn" onclick="openSettingsEditHabit('${h.id}')">Edit</button>
+      <button class="settings-del-btn" onclick="settingsDeleteHabit('${h.id}')">✕</button>
+    </div>`;
+  }).join('');
+  // drag to reorder in settings
+  initSettingsDrag(el, '.settings-item', (srcId, tgtId)=>{
+    const si = currentMonth.habits.findIndex(h=>h.id===srcId);
+    const ti = currentMonth.habits.findIndex(h=>h.id===tgtId);
+    if(si===-1||ti===-1) return;
+    const [m] = currentMonth.habits.splice(si,1);
+    currentMonth.habits.splice(ti,0,m);
+    fbSet(`months/${currentMonthId}/habits`, currentMonth.habits);
+    renderSettingsHabits();
+    renderHabits();
+  });
+}
+window.openSettingsEditHabit = function(id){
+  _settingsEditId = id;
+  const h = currentMonth.habits.find(x=>x.id===id);
+  if(!h) return;
+  document.getElementById('editSettingsHabitName').value = h.name;
+  let g = h.group||'morning';
+  if(g==='night') g='morning';
+  document.getElementById('editSettingsHabitGroup').value = g;
+  document.getElementById('editSettingsHabitModal').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('editSettingsHabitName').focus(),100);
+};
+window.closeSettingsEditHabit = function(){
+  document.getElementById('editSettingsHabitModal').classList.add('hidden');
+  _settingsEditId = null;
+};
+window.confirmSettingsEditHabit = async function(){
+  const name = document.getElementById('editSettingsHabitName').value.trim();
+  const group = document.getElementById('editSettingsHabitGroup').value;
+  if(!name||!_settingsEditId) return;
+  const h = currentMonth.habits.find(x=>x.id===_settingsEditId);
+  if(h){ h.name=name; h.group=group; }
+  closeSettingsEditHabit();
+  renderSettingsHabits();
+  renderHabits();
+  await fbSet(`months/${currentMonthId}/habits`, currentMonth.habits);
+  showToast('Habit updated ✓');
+};
+window.settingsDeleteHabit = async function(id){
+  currentMonth.habits = currentMonth.habits.filter(h=>h.id!==id);
+  renderSettingsHabits();
+  renderHabits();
+  renderDailyScore();
+  await fbSet(`months/${currentMonthId}/habits`, currentMonth.habits);
+  showToast('Habit removed');
+};
+window.settingsAddHabit = async function(){
+  const name = document.getElementById('settingsNewHabit').value.trim();
+  const group = document.getElementById('settingsNewHabitGroup').value;
+  if(!name) return;
+  currentMonth.habits.push({id:'h'+Date.now(), name, group});
+  document.getElementById('settingsNewHabit').value='';
+  renderSettingsHabits();
+  renderHabits();
+  await fbSet(`months/${currentMonthId}/habits`, currentMonth.habits);
+  showToast('Habit added ✓');
+};
+
+function renderSettingsGroups(){
+  const el = document.getElementById('settingsGroupList');
+  el.innerHTML = habitGroupOrder.filter(g=>g!=='night').map(g=>{
+    const meta=getGroupMeta(g);
+    const tagCls=BUILTIN_GROUP_META[g]?'tag-'+g:'tag-custom';
+    return `<div class="settings-item" data-sid="${g}">
+      <div class="settings-drag">⋮⋮</div>
+      <span class="settings-group-tag ${tagCls}">${meta.label}</span>
+      <div class="settings-item-name" style="margin-left:8px;flex:1">${meta.label}</div>
+      <button class="settings-edit-btn" onclick="renameGroup('${g}')">Rename</button>
+      <button class="settings-del-btn" onclick="deleteCustomGroup('${g}')">✕</button>
+    </div>`;
+  }).join('');
+  // Add group input
+  el.innerHTML += `<div style="margin-top:10px" class="settings-add-row">
+    <input class="settings-input" id="newGroupInput" placeholder="New group name...">
+    <button class="settings-add-btn" onclick="addCustomGroup()">+ Add</button>
+  </div>`;
+  initSettingsDrag(el, '.settings-item', (srcId, tgtId)=>{
+    const si = habitGroupOrder.indexOf(srcId);
+    const ti = habitGroupOrder.indexOf(tgtId);
+    if(si===-1||ti===-1) return;
+    const [m] = habitGroupOrder.splice(si,1);
+    habitGroupOrder.splice(ti,0,m);
+    localStorage.setItem('hc-group-order', JSON.stringify(habitGroupOrder));
+    renderSettingsGroups();
+    renderHabits();
+  });
+}
+window.addCustomGroup = function(){
+  const input = document.getElementById('newGroupInput');
+  const name = input.value.trim().toLowerCase().replace(/\s+/g,'-');
+  if(!name||habitGroupOrder.includes(name)) return;
+  habitGroupOrder.push(name);
+  localStorage.setItem('hc-group-order', JSON.stringify(habitGroupOrder));
+  input.value='';
+  renderSettingsGroups();
+  renderHabits();
+  // Update group selects
+  populateGroupSelects();
+};
+window.renameGroup = function(g){
+  const current = getGroupLabel(g);
+  const name = prompt('Rename group:', current);
+  if(!name||!name.trim()) return;
+  const labels = JSON.parse(localStorage.getItem('hc-group-labels')||'{}');
+  labels[g] = name.trim();
+  localStorage.setItem('hc-group-labels', JSON.stringify(labels));
+  renderSettingsGroups();
+  renderHabits();
+  populateGroupSelects();
+};
+window.deleteCustomGroup = function(g){
+  const remaining = habitGroupOrder.filter(x=>x!==g);
+  const fallback = remaining[0]||'morning';
+  if(!confirm('Delete group "'+getGroupMeta(g).label+'"? Habits in this group will move to "'+getGroupMeta(fallback).label+'".')) return;
+  currentMonth.habits.forEach(h=>{ if(h.group===g) h.group=fallback; });
+  habitGroupOrder = remaining;
+  localStorage.setItem('hc-group-order', JSON.stringify(habitGroupOrder));
+  // Clean up label
+  const labels = JSON.parse(localStorage.getItem('hc-group-labels')||'{}');
+  delete labels[g];
+  localStorage.setItem('hc-group-labels', JSON.stringify(labels));
+  fbSet('months/'+currentMonthId+'/habits', currentMonth.habits);
+  renderSettingsGroups();
+  renderHabits();
+  populateGroupSelects();
+};
+function populateGroupSelects(){
+  const selects = ['settingsNewHabitGroup','editSettingsHabitGroup','newHabitGroup'];
+  const visibleGroups = habitGroupOrder.filter(g=>g!=='night');
+  selects.forEach(id=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = visibleGroups.map(g=>`<option value="${g}">${getGroupMeta(g).label}</option>`).join('');
+    if(visibleGroups.includes(cur)) sel.value=cur;
+  });
+}
+
+// Generic drag helper for settings lists
+function initSettingsDrag(container, itemSel, onDrop){
+  let dragSrcEl = null;
+  container.querySelectorAll(itemSel).forEach(item=>{
+    const handle = item.querySelector('.settings-drag,.wp-sitem-drag');
+    if(handle) handle.addEventListener('mousedown',()=>item.setAttribute('draggable','true'));
+    item.addEventListener('dragend',()=>item.setAttribute('draggable','false'));
+    item.addEventListener('dragstart',e=>{
+      dragSrcEl=item; e.dataTransfer.effectAllowed='move';
+      setTimeout(()=>item.style.opacity='.4',0);
+    });
+    item.addEventListener('dragend',()=>{ item.style.opacity=''; dragSrcEl=null; container.querySelectorAll(itemSel).forEach(i=>i.style.borderColor=''); });
+    item.addEventListener('dragover',e=>{ if(dragSrcEl) e.preventDefault(); });
+    item.addEventListener('drop',e=>{
+      e.preventDefault();
+      if(!dragSrcEl||dragSrcEl===item) return;
+      onDrop(dragSrcEl.dataset.sid, item.dataset.sid);
+    });
+  });
+}
+
+// ── WORKOUT SETTINGS ──
+function renderWpSettings(){
+  renderWpSettingsCycle();
+  renderWpSettingsGym();
+  renderWpSettingsCardio();
+}
+
+function renderWpSettingsCycle(){
+  const el = document.getElementById('wpSettingsCycle');
+  el.innerHTML = wpCycle.map(s=>`
+    <div class="settings-item" data-sid="${s.id}">
+      <div class="settings-drag">⋮⋮</div>
+      <div style="flex:1">
+        <div class="settings-item-name">${s.name}</div>
+        <div class="settings-item-sub">${s.group}</div>
+      </div>
+      <button class="settings-edit-btn" onclick="wpEditSlot(${s.id})">Edit</button>
+      <button class="settings-del-btn" onclick="wpDelSlot(${s.id})">✕</button>
+    </div>
+  `).join('');
+  initSettingsDrag(el, '.settings-item', (srcId,tgtId)=>{
+    const si=wpCycle.findIndex(x=>x.id==srcId), ti=wpCycle.findIndex(x=>x.id==tgtId);
+    const [m]=wpCycle.splice(si,1); wpCycle.splice(ti,0,m);
+    WSS(WK.cycle,wpCycle); renderWpSettingsCycle();
+  });
+}
+window.wpEditSlot = function(id){
+  const s=wpCycle.find(x=>x.id===id); if(!s)return;
+  const name=prompt('Slot name:',s.name); if(name===null)return;
+  const group=prompt('Group (gym/cardio):',s.group); if(group===null)return;
+  if(name.trim()) s.name=name.trim();
+  if(group==='gym'||group==='cardio') s.group=group;
+  WSS(WK.cycle,wpCycle); renderWpSettingsCycle(); renderWorkoutPanel();
+};
+window.wpDelSlot = function(id){
+  if(!confirm('Remove this slot?'))return;
+  wpCycle=wpCycle.filter(x=>x.id!==id);
+  WSS(WK.cycle,wpCycle); renderWpSettingsCycle(); renderWorkoutPanel();
+};
+window.wpSettingsAddSlot = function(){
+  const name=document.getElementById('wpNewSlotName').value.trim();
+  const group=document.getElementById('wpNewSlotGroup').value;
+  if(!name)return;
+  wpCycle.push({id:Date.now(),name,group});
+  WSS(WK.cycle,wpCycle);
+  document.getElementById('wpNewSlotName').value='';
+  renderWpSettingsCycle(); renderWorkoutPanel();
+};
+
+function renderWpSettingsGym(){
+  const el=document.getElementById('wpSettingsGym');
+  el.innerHTML=wpGymPresets.map((p,i)=>`
+    <div class="settings-item" data-sid="${i}">
+      <div class="settings-drag">⋮⋮</div>
+      <div class="settings-item-name" style="flex:1">${p.name}</div>
+      <button class="settings-edit-btn" onclick="wpEditGymPreset(${i})">Edit</button>
+      <button class="settings-del-btn" onclick="wpDelGymPreset(${i})">✕</button>
+    </div>
+  `).join('');
+  initSettingsDrag(el,'.settings-item',(si,ti)=>{
+    const sii=parseInt(si),tii=parseInt(ti);
+    const [m]=wpGymPresets.splice(sii,1); wpGymPresets.splice(tii,0,m);
+    WSS(WK.gymPresets,wpGymPresets); renderWpSettingsGym(); renderWorkoutPanel();
+  });
+}
+window.wpEditGymPreset = function(i){
+  const p=wpGymPresets[i]; if(!p)return;
+  const name=prompt('Preset name:',p.name); if(name===null)return;
+  if(name.trim()) p.name=name.trim();
+  WSS(WK.gymPresets,wpGymPresets); renderWpSettingsGym(); renderWorkoutPanel();
+};
+window.wpDelGymPreset = function(i){
+  if(!confirm('Delete this preset?'))return;
+  wpGymPresets.splice(i,1);
+  WSS(WK.gymPresets,wpGymPresets); renderWpSettingsGym(); renderWorkoutPanel();
+};
+window.wpSettingsAddGym = function(){
+  const name=document.getElementById('wpNewGymName').value.trim(); if(!name)return;
+  wpGymPresets.push({name,blocks:[]});
+  WSS(WK.gymPresets,wpGymPresets);
+  document.getElementById('wpNewGymName').value='';
+  renderWpSettingsGym(); renderWorkoutPanel();
+};
+
+function renderWpSettingsCardio(){
+  const el=document.getElementById('wpSettingsCardio');
+  el.innerHTML=wpCardioPresets.map((p,i)=>`
+    <div class="settings-item" data-sid="${i}">
+      <div class="settings-drag">⋮⋮</div>
+      <div style="flex:1">
+        <div class="settings-item-name">${p.name}</div>
+        <div class="settings-item-sub">${(p.options||[]).join(', ')}</div>
+      </div>
+      <button class="settings-edit-btn" onclick="wpEditCardioPreset(${i})">Edit</button>
+      <button class="settings-del-btn" onclick="wpDelCardioPreset(${i})">✕</button>
+    </div>
+  `).join('');
+  initSettingsDrag(el,'.settings-item',(si,ti)=>{
+    const sii=parseInt(si),tii=parseInt(ti);
+    const [m]=wpCardioPresets.splice(sii,1); wpCardioPresets.splice(tii,0,m);
+    WSS(WK.cardioPresets,wpCardioPresets); renderWpSettingsCardio(); renderWorkoutPanel();
+  });
+}
+window.wpEditCardioPreset = function(i){
+  const p=wpCardioPresets[i]; if(!p)return;
+  const name=prompt('Preset name:',p.name); if(name===null)return;
+  const opts=prompt('Activities (comma separated):',(p.options||[]).join(', ')); if(opts===null)return;
+  if(name.trim()) p.name=name.trim();
+  p.options=opts.split(',').map(s=>s.trim()).filter(Boolean);
+  WSS(WK.cardioPresets,wpCardioPresets); renderWpSettingsCardio(); renderWorkoutPanel();
+};
+window.wpDelCardioPreset = function(i){
+  if(!confirm('Delete this preset?'))return;
+  wpCardioPresets.splice(i,1);
+  WSS(WK.cardioPresets,wpCardioPresets); renderWpSettingsCardio(); renderWorkoutPanel();
+};
+window.wpSettingsAddCardio = function(){
+  const name=document.getElementById('wpNewCardioName').value.trim(); if(!name)return;
+  wpCardioPresets.push({name,options:[]});
+  WSS(WK.cardioPresets,wpCardioPresets);
+  document.getElementById('wpNewCardioName').value='';
+  renderWpSettingsCardio(); renderWorkoutPanel();
+};
+// ══ END HABIT SETTINGS ══
+
+// Clear all logged day data from Firebase
+window.clearAllData = async function(){
+  if(!currentMonthId) return;
+  currentMonth.days = {};
+  await fbSet(`months/${currentMonthId}/days`, null);
+  render();
+  showToast('All data cleared ✓');
+};
+
+// Export the current month (habits, questions, days) as a downloadable JSON backup
+window.exportMonthData = function(){
+  if(!currentMonthId) return;
+  const monthMeta = monthList.find(m=>m.id===currentMonthId);
+  const exportObj = {
+    exportedAt: new Date().toISOString(),
+    monthName: monthMeta ? monthMeta.name : 'Unknown',
+    habits: currentMonth.habits,
+    questions: currentMonth.questions,
+    days: currentMonth.days,
+  };
+  const blob = new Blob([JSON.stringify(exportObj, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = (monthMeta ? monthMeta.name : 'habit-data').replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+  a.href = url;
+  a.download = `health-cycle-${safeName}-backup.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast('Backup downloaded ✓');
+};
+
+let _editingHabitId = null;
+
+window.openEditHabit = function(id, name){
+  _editingHabitId = id;
+  const input = document.getElementById('editHabitInput');
+  input.value = name;
+  document.getElementById('editHabitModal').classList.remove('hidden');
+  setTimeout(()=>input.focus(), 100);
+};
+
+window.closeEditHabit = function(){
+  document.getElementById('editHabitModal').classList.add('hidden');
+  _editingHabitId = null;
+};
+
+window.confirmEditHabit = async function(){
+  const name = document.getElementById('editHabitInput').value.trim();
+  if(!name || !_editingHabitId) return;
+  const habit = currentMonth.habits.find(h=>h.id===_editingHabitId);
+  if(habit) habit.name = name;
+  closeEditHabit();
+  renderHabits();
+  await fbSet(`months/${currentMonthId}/habits`, currentMonth.habits);
+  showToast('Habit updated ✓');
+};
+
+document.getElementById('editHabitInput').addEventListener('keydown', e=>{
+  if(e.key==='Enter') confirmEditHabit();
+  if(e.key==='Escape') closeEditHabit();
+});
+
+loadHome();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  const swCode = `
+const CACHE='hc-v1';
+const ASSETS=['/'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS))));
+self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+  `;
+  const blob=new Blob([swCode],{type:'application/javascript'});
+  const swUrl=URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(()=>{});
+}
+</script>
+</body>
+</html>
