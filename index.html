@@ -799,8 +799,8 @@ const localStorage = (() => {
 // the way a real tree database would.
 const HC_PREFIX='hcdata:';
 function ref(_db, path){ return path; }
-// Data only lives on this device, so there is nothing to listen to.
-function onValue(){ return ()=>{}; }
+// Data only lives on this device, so a listener just receives the stored value once.
+function onValue(path,cb){ get(path).then(cb); return ()=>{}; }
 function hcKeys(){
   const out=[];
   try{ for(let i=0;i<window.localStorage.length;i++){ const k=window.localStorage.key(i); if(k&&k.startsWith(HC_PREFIX)) out.push(k.slice(HC_PREFIX.length)); } }catch{}
@@ -914,7 +914,16 @@ let activeTab='today';
 // Local calendar date, not UTC — toISOString() shifts to UTC and silently
 // mislabels every entry by a day for any positive UTC offset (e.g. CEST).
 function dk(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function getDay(d){return currentMonth.days[dk(d)]||{habits:{},reflection:{}};}
+// Days saved in other months (e.g. 30 Sep while October is open). Months are
+// just containers, so streaks, penalties and the week view must see across them.
+let otherDays={}, otherOwner={};
+function getDay(d){const k=dk(d);return currentMonth.days[k]||otherDays[k]||{habits:{},reflection:{}};}
+// Save a day back into whichever month already holds it (the open month otherwise).
+function storeDay(key,day){
+  const mid=!currentMonth.days[key]&&otherOwner[key]?otherOwner[key]:currentMonthId;
+  if(mid===currentMonthId) currentMonth.days[key]=day; else otherDays[key]=day;
+  return mid;
+}
 function getMonday(d){const x=new Date(d),dow=x.getDay();x.setDate(x.getDate()+(dow===0?-6:1-dow));return x;}
 
 function setSyncStatus(s){
@@ -977,6 +986,20 @@ function entryDateFor(m){
 let _monthUnsubs=[];
 function listenToMonth(id){
   _monthUnsubs.forEach(u=>u()); _monthUnsubs=[];
+  otherDays={}; otherOwner={};
+  const others={};
+  monthList.filter(m=>m.id!==id).forEach(m=>{
+    _monthUnsubs.push(onValue(ref(db,`users/${UID}/months/${m.id}/days`),snap=>{
+      if(currentMonthId!==id) return;
+      others[m.id]=snap.exists()?snap.val():{};
+      // Rebuild in list order so newer months win if two ever hold the same day.
+      const typing=_reflPending&&_reflPending.monthId!==id?{key:_reflPending.key,day:otherDays[_reflPending.key]}:null;
+      otherDays={}; otherOwner={};
+      monthList.forEach(x=>{ const ds=others[x.id]; if(!ds) return; Object.keys(ds).forEach(k=>{ otherDays[k]=ds[k]; otherOwner[k]=x.id; }); });
+      if(typing&&typing.day) otherDays[typing.key]={...(otherDays[typing.key]||{}),reflection:typing.day.reflection};
+      refreshAfterRemoteChange();
+    }));
+  });
   const base=`users/${UID}/months/${id}`;
   const onChange=(path,apply)=>{
     let first=true; // the first event is just the data we already loaded
@@ -992,7 +1015,7 @@ function listenToMonth(id){
     // Keep what's being typed here: don't let an older copy from the server
     // overwrite a reflection that hasn't finished saving.
     const key=dk(currentDate);
-    if(_reflPending&&_reflPending.key===key&&currentMonth.days[key]){
+    if(_reflPending&&_reflPending.monthId===id&&_reflPending.key===key&&currentMonth.days[key]){
       incoming[key]={...(incoming[key]||{}),reflection:currentMonth.days[key].reflection};
     }
     currentMonth.days=incoming;
@@ -1665,10 +1688,10 @@ window.toggleHabit=async function(id){
   const day=getDay(currentDate);
   if(!day.habits)day.habits={};
   day.habits[id]=!day.habits[id];
-  currentMonth.days[dk(currentDate)]=day;
+  const mid=storeDay(dk(currentDate),day);
   renderHabits();
   renderDailyScore();
-  await fbSet(`months/${currentMonthId}/days/${dk(currentDate)}`,day);
+  await fbSet(`months/${mid}/days/${dk(currentDate)}`,day);
 };
 
 // Common tail for a baseline reset: apply the new date locally, sync it to Firebase, re-render.
@@ -1776,16 +1799,14 @@ function captureReflection(){
     const el=document.getElementById('ans_'+q.id);
     if(el)day.reflection[q.id]=el.value;
   });
-  currentMonth.days[key]=day;
-  _reflPending={monthId:currentMonthId,key};
+  _reflPending={monthId:storeDay(key,day),key};
 }
 async function flushReflection(){
   clearTimeout(_reflTimer); _reflTimer=null;
   const p=_reflPending;
   if(!p) return;
   _reflPending=null;
-  if(p.monthId!==currentMonthId) return;
-  const day=currentMonth.days[p.key];
+  const day=p.monthId===currentMonthId?currentMonth.days[p.key]:otherDays[p.key];
   if(!day) return;
   const ok=await fbSet(`months/${p.monthId}/days/${p.key}`,day);
   // Only show the result if the user is still looking at that day
@@ -2269,9 +2290,9 @@ function renderWorkoutPanel(){
         const day=getDay(currentDate);
         if(!day.habits)day.habits={};
         day.habits['h_m12']=true;
-        currentMonth.days[dk(currentDate)]=day;
+        const mid=storeDay(dk(currentDate),day);
         renderHabits();renderDailyScore();
-        fbSet(`months/${currentMonthId}/days/${dk(currentDate)}`,day);
+        fbSet(`months/${mid}/days/${dk(currentDate)}`,day);
       }
       renderWorkoutPanel();
     });
