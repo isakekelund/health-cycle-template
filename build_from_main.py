@@ -53,6 +53,8 @@ rx(
 // the way a real tree database would.
 const HC_PREFIX='hcdata:';
 function ref(_db, path){ return path; }
+// Data only lives on this device, so there is nothing to listen to.
+function onValue(){ return ()=>{}; }
 function hcKeys(){
   const out=[];
   try{ for(let i=0;i<window.localStorage.length;i++){ const k=window.localStorage.key(i); if(k&&k.startsWith(HC_PREFIX)) out.push(k.slice(HC_PREFIX.length)); } }catch{}

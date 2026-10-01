@@ -110,7 +110,8 @@ button{font-family:inherit}
 .habit-meta.streak{color:var(--gold-dim)}.habit-meta.streak.at-risk{color:var(--text-dim)}
 .habit-meta.penalty{color:var(--red-bright);font-weight:600}
 /* Every row reserves the arrow's width so the meta (streak, penalty) lines up with the workout row */
-.habit-expand{width:14px;text-align:center;font-size:14px;line-height:1;color:var(--text-dim);transition:transform .25s;flex-shrink:0}
+.habit-expand{width:14px;height:14px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);transition:transform .25s;flex-shrink:0}
+.habit-expand svg{display:block}
 .habit-item.workout-open .habit-expand{transform:rotate(180deg);color:var(--gold)}
 
 /* REFLECTION */
@@ -798,6 +799,8 @@ const localStorage = (() => {
 // the way a real tree database would.
 const HC_PREFIX='hcdata:';
 function ref(_db, path){ return path; }
+// Data only lives on this device, so there is nothing to listen to.
+function onValue(){ return ()=>{}; }
 function hcKeys(){
   const out=[];
   try{ for(let i=0;i<window.localStorage.length;i++){ const k=window.localStorage.key(i); if(k&&k.startsWith(HC_PREFIX)) out.push(k.slice(HC_PREFIX.length)); } }catch{}
@@ -968,6 +971,84 @@ function entryDateFor(m){
   return d;
 }
 
+// ── LIVE SYNC ──
+// Changes made on another device (check-offs, reflections, habit edits, resets)
+// arrive here within a second or two, so an app left open never goes stale.
+let _monthUnsubs=[];
+function listenToMonth(id){
+  _monthUnsubs.forEach(u=>u()); _monthUnsubs=[];
+  const base=`users/${UID}/months/${id}`;
+  const onChange=(path,apply)=>{
+    let first=true; // the first event is just the data we already loaded
+    _monthUnsubs.push(onValue(ref(db,`${base}/${path}`),snap=>{
+      if(first){ first=false; return; }
+      if(currentMonthId!==id) return;
+      apply(snap.exists()?snap.val():null);
+      refreshAfterRemoteChange();
+    }));
+  };
+  onChange('days',val=>{
+    const incoming=val||{};
+    // Keep what's being typed here: don't let an older copy from the server
+    // overwrite a reflection that hasn't finished saving.
+    const key=dk(currentDate);
+    if(_reflPending&&_reflPending.key===key&&currentMonth.days[key]){
+      incoming[key]={...(incoming[key]||{}),reflection:currentMonth.days[key].reflection};
+    }
+    currentMonth.days=incoming;
+  });
+  onChange('habits',val=>{ currentMonth.habits=val||[]; });
+  onChange('questions',val=>{ currentMonth.questions=val||[]; });
+}
+function listenToBaselines(){
+  const watch=(path,apply)=>{ let first=true; onValue(ref(db,`users/${UID}/${path}`),snap=>{ if(first){first=false;return;} if(snap.exists()){ apply(snap.val()); refreshAfterRemoteChange(); } }); };
+  watch('escalationStart',v=>{ ESCALATION_START=new Date(v); localStorage.setItem('hc-escalation-start',v); });
+  watch('weekScoreStart',v=>{ WEEK_SCORE_START=new Date(v); localStorage.setItem('hc-week-score-start',v); });
+}
+function refreshAfterRemoteChange(){
+  if(!currentMonthId) return;
+  renderDateNav();
+  renderHabits();
+  renderDailyScore();
+  // Don't rebuild the reflection boxes under someone who is typing in them.
+  const typing=document.activeElement&&document.activeElement.classList.contains('reflection-area');
+  if(!typing&&!_reflPending) renderQuestions();
+  if(activeTab==='overview') renderOverview();
+  if(!document.getElementById('settings').classList.contains('hidden')&&settingsPage==='habits') renderSettingsHabits();
+}
+
+// ── STAYING CURRENT ──
+// When the app comes back into view: roll the date over if midnight has passed,
+// and reload if a newer version has been deployed since this one was opened.
+let _pageFingerprint=null;
+async function fetchFingerprint(){
+  try{
+    const t=await (await fetch(location.pathname,{cache:'no-store'})).text();
+    let h=0; for(let i=0;i<t.length;i++) h=(h*31+t.charCodeAt(i))|0;
+    return t.length+':'+h;
+  }catch{ return null; }
+}
+async function checkStillCurrent(){
+  const now=new Date(); now.setHours(0,0,0,0);
+  if(now.getTime()!==today.getTime()){
+    const wasOnToday=dk(currentDate)===dk(today);
+    today.setTime(now.getTime());
+    if(wasOnToday) currentDate=new Date(today);
+    if(currentMonthId) render();
+  }
+  if(!_pageFingerprint||!location.protocol.startsWith('http')) return;
+  const fp=await fetchFingerprint();
+  if(fp&&fp!==_pageFingerprint){
+    _pageFingerprint=fp; // never try twice for the same version
+    await flushReflection();
+    // Refresh the browser's cached copy first, or the reload can show the old page.
+    try{ await fetch(location.href,{cache:'reload'}); }catch{}
+    location.reload();
+  }
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') checkStillCurrent(); });
+window.addEventListener('focus',()=>checkStillCurrent());
+
 // ── LOAD ──
 async function repairOldDayKeys(){
   if(localStorage.getItem('hc-daykeys-fixed')) return;
@@ -1040,6 +1121,8 @@ async function loadApp(){
     }
     _appLoaded=true;
     setSyncStatus('synced');
+    listenToBaselines();
+    fetchFingerprint().then(fp=>{ _pageFingerprint=fp; });
     initHabitListClicks();
     initReflectionAutosave();
     populateGroupSelects();
@@ -1206,6 +1289,7 @@ async function enterMonth(id){
     currentMonth.questions=qs.exists()?qs.val():DEFAULT_QUESTIONS;
     currentMonth.days=ds.exists()?ds.val():{};
     setSyncStatus('synced');
+    listenToMonth(id);
     currentDate=entryDateFor(monthList.find(x=>x.id===id));
     calViewMonth=new Date(currentDate.getFullYear(),currentDate.getMonth(),1);
     document.getElementById('noMonth').classList.add('hidden');
@@ -1459,7 +1543,7 @@ function workoutRowHTML(h,done,metaHtml,isPaused){
       <div class="habit-check" data-check-id="${h.id}">${done?'✓':''}</div>
       <div class="habit-name">${esc(h.name)}</div>
       ${metaHtml||''}
-      <span class="habit-expand" aria-hidden="true">⌄</span>
+      <span class="habit-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </div>
     <div id="workoutPanel" class="workout-panel${workoutPanelOpen?' open':''}"><div class="wp-inner" id="workoutPanelInner"></div></div>`;
 }
