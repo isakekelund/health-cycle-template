@@ -8,8 +8,9 @@ Reads the personal app (default: ../health-cycle/index.html) and writes
 
   * on-device storage instead of Isak's Firebase account
   * generic starter habits and workouts
-  * a Scoring settings page: tracked days, workout-every-day, how the miss
-    penalty starts / grows / caps, and the date misses start counting from
+  * a Scoring settings page: tracked days, workout-every-day, the motivation
+    system defaults (how the miss penalty starts / grows / caps), and the date
+    misses start counting from; each habit can override curve and cap
   * welcome tour, example day, "add to home screen" guide, one-time tips
   * one-time repair of data saved by older client versions
 
@@ -193,10 +194,10 @@ function trackedDaysText(){
   return runs.map(r=>r.length>2?`${DAY_SHORT[r[0]]}–${DAY_SHORT[r[r.length-1]]}`:r.map(d=>DAY_SHORT[d]).join(', ')).join(', ');
 }
 function weeklyGoal(){ return SCORING.days.length; }
-function penaltyFor(streak){
-  const b=SCORING.start;
-  let p=SCORING.growth==='flat'?b:SCORING.growth==='double'?b*2**streak:b*(streak+1);
-  return SCORING.cap>0?Math.min(p,SCORING.cap):p;
+function penaltyFor(streak, growth=SCORING.growth, cap=SCORING.cap){
+  const b=SCORING.start, n=streak+1;
+  const p=growth==='flat'?b:growth==='double'?b*2**streak:growth==='square'?b*n*n:b*n;
+  return cap>0?Math.min(p,cap):p;
 }
 function penaltySequenceText(n=4){
   const seq=[];for(let i=0;i<n;i++) seq.push('−'+penaltyFor(i));
@@ -209,15 +210,43 @@ function saveScoring(){
   if(activeTab==='overview') renderOverview();
 }""",
 )
-r(
-    """function getMissPenalty(habitId, date){
-  return getMissStreakBefore(habitId, date) + 1;
-}""",
-    """function getMissPenalty(habitId, date){
-  if(SCORING.growth==='flat') return penaltyFor(0);
-  return penaltyFor(getMissStreakBefore(habitId, date));
+# Motivation system: each habit can have its own curve and cap; otherwise it
+# follows the defaults on the Scoring page.
+rx(
+    r"const PENALTY_CURVES=.*?function getMissPenalty\(habitId, date\)\{.*?\n\}",
+    """// Motivation system: each habit can have its own curve and cap. Habits without
+// their own follow the defaults in Settings → Scoring.
+const PENALTY_CURVES=['flat','linear','double','square'];
+const CURVE_LABEL={flat:'same',linear:'adds up',double:'doubles',square:'x²'};
+const CURVE_SERIES={flat:'1, 1, 1, 1, ...',linear:'1, 2, 3, 4, ...',double:'1, 2, 4, 8, ...',square:'1, 4, 9, 16, ...'};
+// Shared code from the personal app still reads these; the client uses SCORING instead.
+let PENALTY_CURVE='linear', PENALTY_CAP=0;
+function habitById(habitId){ return currentMonth&&currentMonth.habits?currentMonth.habits.find(x=>x.id===habitId):null; }
+function getHabitCurve(habitId){ const h=habitById(habitId); return h&&PENALTY_CURVES.includes(h.curve)?h.curve:SCORING.growth; }
+function getHabitCap(habitId){ const h=habitById(habitId); return h&&h.cap>0?h.cap:SCORING.cap; }
+function getMissPenalty(habitId, date){
+  const g=getHabitCurve(habitId);
+  return penaltyFor(g==='flat'?0:getMissStreakBefore(habitId, date), g, getHabitCap(habitId));
 }""",
 )
+# The personal app's default-curve card is replaced by the Scoring page.
+rx(
+    r'        <section class="card flush">\n          <div class="card-head" style="flex-direction:column[^"]*">\n            <h2 class="card-title">Motivation system</h2>.*?</section>\n',
+    "",
+)
+r("function renderPenaltyCurve(){", "function renderPenaltyCurve(){\n  if(!document.getElementById('penaltyCurveSub')) return;")
+# Edit habit: client curve names, defaults come from SCORING
+r(
+    """      <option value="linear">Curve: linear (1, 2, 3, ...)</option>
+      <option value="double">Curve: doubling (1, 2, 4, 8, ...)</option>
+      <option value="square">Curve: x² (1, 4, 9, ...)</option>""",
+    """      <option value="flat">Curve: same every time (1, 1, 1, ...)</option>
+      <option value="linear">Curve: adds up (1, 2, 3, ...)</option>
+      <option value="double">Curve: doubles (1, 2, 4, 8, ...)</option>
+      <option value="square">Curve: x² (1, 4, 9, ...)</option>""",
+)
+r("`Curve: use default (${CURVE_LABEL[PENALTY_CURVE]})`", "`Curve: use default (${CURVE_LABEL[SCORING.growth]})`")
+r("PENALTY_CAP>0?`Use default (${PENALTY_CAP})`:'Use default (no cap)'", "SCORING.cap>0?`Use default (${SCORING.cap})`:'Use default (no cap)'")
 r(
     "    document.getElementById('dailyMeta').innerHTML=`Rest day — only the workout is tracked${pts}`;",
     "    document.getElementById('dailyMeta').innerHTML=(dp.total?'Rest day — only the workout counts today':`Rest day — tracked days are ${trackedDaysText()}`)+pts;",
@@ -299,7 +328,7 @@ r(
     "// GRAPH\n",
     """function renderScoringExplain(){
   const el=document.getElementById('scoringExplain'); if(!el) return;
-  const grow={flat:'Every missed day costs the same',linear:'Each miss in a row costs more',double:'Each miss in a row doubles'}[SCORING.growth];
+  const grow={flat:'Every missed day costs the same',linear:'Each miss in a row costs more',double:'Each miss in a row doubles',square:'Each miss in a row costs its number squared'}[SCORING.growth];
   el.innerHTML=`Each habit done = +1 point. ${grow}: ${penaltySequenceText()}${SCORING.growth==='flat'?'':' — until you do it again'}.<br>
     <strong style="color:var(--green-bright);font-weight:500">A day counts as positive</strong> when total points are above 0.<br>
     <strong style="color:var(--red-bright);font-weight:500">A day counts as negative</strong> when total points are 0 or below.<br>
@@ -322,7 +351,8 @@ r(
           <label class="sc-check"><input type="checkbox" id="scWorkout" onchange="scSet('workoutEveryDay',this.checked)"> <span>Workout counts every day, rest days included</span></label>
         </section>
         <section class="card">
-          <div class="card-head"><h2 class="card-title">Missed habits</h2></div>
+          <div class="card-head"><h2 class="card-title">Motivation system</h2></div>
+          <p class="card-note" style="margin-bottom:10px">How hard a missed habit hits. These are the defaults for every habit. Give a tougher habit its own curve and cap under Habits &amp; groups.</p>
           <div class="sc-field">
             <div class="sc-label">First miss costs</div>
             <div class="tabs sc-seg" id="scStart"></div>
@@ -389,8 +419,8 @@ r(
     "  months:'Month archive',data:'Resets & data',why:'Why a habit tracker',\n  scoring:'Scoring',install:'Add to home screen',",
 )
 r(
-    "    ['data','Scoring & data','Reset miss penalties or weekly score, export, clear data'],",
-    """    ['scoring','Scoring',`${trackedDaysText()} · misses cost ${penaltySequenceText(3).replace(' … with no limit','…')}`],
+    "    ['data','Scoring & data','Motivation system, resets, export, clear data'],",
+    """    ['scoring','Scoring',`${trackedDaysText()} · motivation system · misses cost ${penaltySequenceText(3).replace(' … with no limit','…')}`],
     ['data','Resets & data','Reset miss penalties or weekly score, export, clear data'],
     ['install','Add to home screen','Use it like a normal app on your phone or computer'],""",
 )
@@ -410,7 +440,7 @@ function renderScoringSettings(){
     `<button class="day-pill${SCORING.days.includes(d)?' on':''}" onclick="scToggleDay(${d})">${DAY_SHORT[d]}</button>`).join('');
   document.getElementById('scWorkout').checked=SCORING.workoutEveryDay;
   segHTML('scStart',[[1,'−1'],[2,'−2'],[3,'−3'],[5,'−5']],SCORING.start,'start');
-  segHTML('scGrowth',[['flat','Same'],['linear','Adds up'],['double','Doubles']],SCORING.growth,'growth');
+  segHTML('scGrowth',[['flat','Same'],['linear','Adds up'],['double','Doubles'],['square','x²']],SCORING.growth,'growth');
   segHTML('scCap',[[0,'None'],[5,'5'],[7,'7'],[10,'10'],[20,'20']],SCORING.cap,'cap');
   document.getElementById('scPreview').innerHTML=`Missing a habit several days in a row: <strong>${penaltySequenceText(5)}</strong>`;
   const d=ESCALATION_START;
@@ -439,15 +469,18 @@ function normGroup(h){""",
 
 # Load scoring (and older clients' tracked-days setting) on startup.
 r(
-    "      if(s.groupLabels){localStorage.setItem('hc-group-labels',JSON.stringify(s.groupLabels));}\n    }",
-    """      if(s.groupLabels){localStorage.setItem('hc-group-labels',JSON.stringify(s.groupLabels));}
-      if(s.scoring) SCORING={...SCORING_DEFAULTS,...s.scoring};
-    }
-    if(!settingsSnap.exists()||!settingsSnap.val().scoring){
+    "      if(s.groupLabels){localStorage.setItem('hc-group-labels',JSON.stringify(s.groupLabels));}\n",
+    "      if(s.groupLabels){localStorage.setItem('hc-group-labels',JSON.stringify(s.groupLabels));}\n"
+    "      if(s.scoring) SCORING={...SCORING_DEFAULTS,...s.scoring};\n",
+)
+r(
+    "    if(workoutSnap.exists()){",
+    """    if(!settingsSnap.exists()||!settingsSnap.val().scoring){
       // Older client versions kept tracked days in their own key.
       const legacy=JSON.parse(localStorage.getItem('hc-tracking-days')||'null');
       if(legacy&&legacy.length) SCORING.days=legacy;
-    }""",
+    }
+    if(workoutSnap.exists()){""",
 )
 
 # ── 4. Onboarding: welcome tour, example day, tips ──────────────────────

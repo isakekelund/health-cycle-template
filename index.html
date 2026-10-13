@@ -611,7 +611,8 @@ button{font-family:inherit}
           <label class="sc-check"><input type="checkbox" id="scWorkout" onchange="scSet('workoutEveryDay',this.checked)"> <span>Workout counts every day, rest days included</span></label>
         </section>
         <section class="card">
-          <div class="card-head"><h2 class="card-title">Missed habits</h2></div>
+          <div class="card-head"><h2 class="card-title">Motivation system</h2></div>
+          <p class="card-note" style="margin-bottom:10px">How hard a missed habit hits. These are the defaults for every habit. Give a tougher habit its own curve and cap under Habits &amp; groups.</p>
           <div class="sc-field">
             <div class="sc-label">First miss costs</div>
             <div class="tabs sc-seg" id="scStart"></div>
@@ -724,6 +725,16 @@ button{font-family:inherit}
     <div class="modal-title">Edit habit</div>
     <input class="modal-input" id="editSettingsHabitName" placeholder="Habit name..." onkeydown="if(event.key==='Enter')confirmSettingsEditHabit()">
     <select class="modal-input" id="editSettingsHabitGroup"></select>
+    <div class="srow-name" style="margin:4px 0 6px">Motivation system</div>
+    <select class="modal-input" id="editSettingsHabitCurve" aria-label="Motivation curve">
+      <option value="">Curve: use default</option>
+      <option value="flat">Curve: same every time (1, 1, 1, ...)</option>
+      <option value="linear">Curve: adds up (1, 2, 3, ...)</option>
+      <option value="double">Curve: doubles (1, 2, 4, 8, ...)</option>
+      <option value="square">Curve: x² (1, 4, 9, ...)</option>
+    </select>
+    <label for="editSettingsHabitCap" class="srow-sub" style="display:block;margin:0 0 6px">Cap: max points per miss. Leave empty to use the default cap.</label>
+    <input class="modal-input" id="editSettingsHabitCap" type="number" min="0" step="1" inputmode="numeric" aria-label="Motivation cap for this habit">
     <div class="modal-btns">
       <button class="btn" onclick="closeSettingsEditHabit()">Cancel</button>
       <button class="btn btn-primary" onclick="confirmSettingsEditHabit()">Save</button>
@@ -1027,6 +1038,8 @@ function listenToBaselines(){
   const watch=(path,apply)=>{ let first=true; onValue(ref(db,`users/${UID}/${path}`),snap=>{ if(first){first=false;return;} if(snap.exists()){ apply(snap.val()); refreshAfterRemoteChange(); } }); };
   watch('escalationStart',v=>{ ESCALATION_START=new Date(v); localStorage.setItem('hc-escalation-start',v); });
   watch('weekScoreStart',v=>{ WEEK_SCORE_START=new Date(v); localStorage.setItem('hc-week-score-start',v); });
+  watch('settings/penaltyCurve',v=>{ if(!PENALTY_CURVES.includes(v)) return; PENALTY_CURVE=v; localStorage.setItem('hc-penalty-curve',v); if(settingsPage==='data') renderPenaltyCurve(); });
+  watch('settings/penaltyCap',v=>{ if(typeof v!=='number'||v<0) return; PENALTY_CAP=v; localStorage.setItem('hc-penalty-cap',String(v)); if(settingsPage==='data') renderPenaltyCurve(); });
 }
 function refreshAfterRemoteChange(){
   if(!currentMonthId) return;
@@ -1120,6 +1133,8 @@ async function loadApp(){
       if(s.groupOrder){habitGroupOrder=s.groupOrder;localStorage.setItem('hc-group-order',JSON.stringify(s.groupOrder));}
       if(s.groupLabels){localStorage.setItem('hc-group-labels',JSON.stringify(s.groupLabels));}
       if(s.scoring) SCORING={...SCORING_DEFAULTS,...s.scoring};
+      if(PENALTY_CURVES.includes(s.penaltyCurve)){PENALTY_CURVE=s.penaltyCurve;localStorage.setItem('hc-penalty-curve',s.penaltyCurve);}
+      if(typeof s.penaltyCap==='number'&&s.penaltyCap>=0){PENALTY_CAP=s.penaltyCap;localStorage.setItem('hc-penalty-cap',String(s.penaltyCap));}
     }
     if(!settingsSnap.exists()||!settingsSnap.val().scoring){
       // Older client versions kept tracked days in their own key.
@@ -1447,10 +1462,10 @@ function trackedDaysText(){
   return runs.map(r=>r.length>2?`${DAY_SHORT[r[0]]}–${DAY_SHORT[r[r.length-1]]}`:r.map(d=>DAY_SHORT[d]).join(', ')).join(', ');
 }
 function weeklyGoal(){ return SCORING.days.length; }
-function penaltyFor(streak){
-  const b=SCORING.start;
-  let p=SCORING.growth==='flat'?b:SCORING.growth==='double'?b*2**streak:b*(streak+1);
-  return SCORING.cap>0?Math.min(p,SCORING.cap):p;
+function penaltyFor(streak, growth=SCORING.growth, cap=SCORING.cap){
+  const b=SCORING.start, n=streak+1;
+  const p=growth==='flat'?b:growth==='double'?b*2**streak:growth==='square'?b*n*n:b*n;
+  return cap>0?Math.min(p,cap):p;
 }
 function penaltySequenceText(n=4){
   const seq=[];for(let i=0;i<n;i++) seq.push('−'+penaltyFor(i));
@@ -1538,12 +1553,22 @@ function getMissStreakBefore(habitId, refDate){
   return streak;
 }
 
-// Penalty for a habit if missed on `date`: one more point for every consecutive
-// prior miss (1, 2, 3, ...) with no cap, so the only way to stop it growing is to
-// actually do the habit.
+// Penalty for a habit if missed on `date`, where n is the miss number in the
+// current streak: linear gives n (1, 2, 3, ...), square gives n² (1, 4, 9, ...).
+// No cap, so the only way to stop it growing is to actually do the habit.
+// Motivation system: each habit can have its own curve and cap. Habits without
+// their own follow the defaults in Settings → Scoring.
+const PENALTY_CURVES=['flat','linear','double','square'];
+const CURVE_LABEL={flat:'same',linear:'adds up',double:'doubles',square:'x²'};
+const CURVE_SERIES={flat:'1, 1, 1, 1, ...',linear:'1, 2, 3, 4, ...',double:'1, 2, 4, 8, ...',square:'1, 4, 9, 16, ...'};
+// Shared code from the personal app still reads these; the client uses SCORING instead.
+let PENALTY_CURVE='linear', PENALTY_CAP=0;
+function habitById(habitId){ return currentMonth&&currentMonth.habits?currentMonth.habits.find(x=>x.id===habitId):null; }
+function getHabitCurve(habitId){ const h=habitById(habitId); return h&&PENALTY_CURVES.includes(h.curve)?h.curve:SCORING.growth; }
+function getHabitCap(habitId){ const h=habitById(habitId); return h&&h.cap>0?h.cap:SCORING.cap; }
 function getMissPenalty(habitId, date){
-  if(SCORING.growth==='flat') return penaltyFor(0);
-  return penaltyFor(getMissStreakBefore(habitId, date));
+  const g=getHabitCurve(habitId);
+  return penaltyFor(g==='flat'?0:getMissStreakBefore(habitId, date), g, getHabitCap(habitId));
 }
 
 // Total weighted points for a day: +1 per completed habit, escalating negative
@@ -1938,7 +1963,7 @@ function renderWeek(){
 
 function renderScoringExplain(){
   const el=document.getElementById('scoringExplain'); if(!el) return;
-  const grow={flat:'Every missed day costs the same',linear:'Each miss in a row costs more',double:'Each miss in a row doubles'}[SCORING.growth];
+  const grow={flat:'Every missed day costs the same',linear:'Each miss in a row costs more',double:'Each miss in a row doubles',square:'Each miss in a row costs its number squared'}[SCORING.growth];
   el.innerHTML=`Each habit done = +1 point. ${grow}: ${penaltySequenceText()}${SCORING.growth==='flat'?'':' — until you do it again'}.<br>
     <strong style="color:var(--green-bright);font-weight:500">A day counts as positive</strong> when total points are above 0.<br>
     <strong style="color:var(--red-bright);font-weight:500">A day counts as negative</strong> when total points are 0 or below.<br>
@@ -2364,7 +2389,7 @@ window.wpResetCycle = function(){
 let habitGroupOrder = JSON.parse(localStorage.getItem('hc-group-order')||'null') || ['morning','evening','general'];
 function saveGroupSettings(){
   if(!_appLoaded) return;
-  fbSet('settings',{groupOrder:habitGroupOrder,groupLabels:JSON.parse(localStorage.getItem('hc-group-labels')||'{}')});
+  fbSet('settings',{groupOrder:habitGroupOrder,groupLabels:JSON.parse(localStorage.getItem('hc-group-labels')||'{}'),penaltyCurve:PENALTY_CURVE,penaltyCap:PENALTY_CAP});
 }
 
 const SETTINGS_PAGES={
@@ -2409,7 +2434,7 @@ function renderSettingsMenu(){
     ['questions','Reflection questions',m?`${currentMonth.questions.length} questions`:'Open a month first'],
     ['workout','Workout','Cycle slots, gym and cardio presets'],
     ['months','Month archive',`${monthList.length} month${monthList.length===1?'':'s'} · add or remove`],
-    ['scoring','Scoring',`${trackedDaysText()} · misses cost ${penaltySequenceText(3).replace(' … with no limit','…')}`],
+    ['scoring','Scoring',`${trackedDaysText()} · motivation system · misses cost ${penaltySequenceText(3).replace(' … with no limit','…')}`],
     ['data','Resets & data','Reset miss penalties or weekly score, export, clear data'],
     ['install','Add to home screen','Use it like a normal app on your phone or computer'],
     ['why','Why a habit tracker',''],
@@ -2430,7 +2455,7 @@ function renderScoringSettings(){
     `<button class="day-pill${SCORING.days.includes(d)?' on':''}" onclick="scToggleDay(${d})">${DAY_SHORT[d]}</button>`).join('');
   document.getElementById('scWorkout').checked=SCORING.workoutEveryDay;
   segHTML('scStart',[[1,'−1'],[2,'−2'],[3,'−3'],[5,'−5']],SCORING.start,'start');
-  segHTML('scGrowth',[['flat','Same'],['linear','Adds up'],['double','Doubles']],SCORING.growth,'growth');
+  segHTML('scGrowth',[['flat','Same'],['linear','Adds up'],['double','Doubles'],['square','x²']],SCORING.growth,'growth');
   segHTML('scCap',[[0,'None'],[5,'5'],[7,'7'],[10,'10'],[20,'20']],SCORING.cap,'cap');
   document.getElementById('scPreview').innerHTML=`Missing a habit several days in a row: <strong>${penaltySequenceText(5)}</strong>`;
   const d=ESCALATION_START;
@@ -2456,6 +2481,16 @@ window.setEscalationStart=function(v){
 
 function normGroup(h){ let g=h.group||'morning'; if(g==='night') g='morning'; return g; }
 
+function habitRowSub(h){
+  const bits=[];
+  if(h.paused) bits.push('Paused');
+  const mot=[];
+  if(PENALTY_CURVES.includes(h.curve)) mot.push(CURVE_LABEL[h.curve]);
+  if(h.cap>0) mot.push('cap '+h.cap);
+  if(mot.length) bits.push('Motivation: '+mot.join(', '));
+  return bits.length?`<div class="srow-sub">${bits.join(' · ')}</div>`:'';
+}
+
 function renderSettingsHabits(){
   const el = document.getElementById('settingsHabitList');
   if(!currentMonthId){ el.innerHTML='<div class="srow empty muted">Open or create a month first.</div>'; return; }
@@ -2472,7 +2507,7 @@ function renderSettingsHabits(){
     hs.forEach(h=>{
       html+=`<div class="srow${h.paused?' is-paused':''}" data-sid="${h.id}">
         <span class="drag" title="Drag to reorder">${ICON.grip}</span>
-        <div class="srow-main"><div class="srow-name">${esc(h.name)}</div>${h.paused?'<div class="srow-sub">Paused</div>':''}</div>
+        <div class="srow-main"><div class="srow-name">${esc(h.name)}</div>${habitRowSub(h)}</div>
         <button class="ibtn" title="${h.paused?'Resume':'Pause'}" aria-label="${h.paused?'Resume':'Pause'}" onclick="toggleHabitPause('${h.id}')">${h.paused?ICON.play:ICON.pause}</button>
         <button class="ibtn" title="Edit" aria-label="Edit" onclick="openSettingsEditHabit('${h.id}')">${ICON.edit}</button>
         <button class="ibtn danger" title="Delete" aria-label="Delete" onclick="settingsDeleteHabit('${h.id}')">${ICON.del}</button>
@@ -2493,6 +2528,11 @@ window.openSettingsEditHabit = function(id){
   let g = h.group||'morning';
   if(g==='night') g='morning';
   document.getElementById('editSettingsHabitGroup').value = g;
+  document.querySelector('#editSettingsHabitCurve option[value=""]').textContent=`Curve: use default (${CURVE_LABEL[SCORING.growth]})`;
+  document.getElementById('editSettingsHabitCurve').value = PENALTY_CURVES.includes(h.curve)?h.curve:'';
+  const capIn=document.getElementById('editSettingsHabitCap');
+  capIn.value = h.cap>0?h.cap:'';
+  capIn.placeholder = SCORING.cap>0?`Use default (${SCORING.cap})`:'Use default (no cap)';
   document.getElementById('editSettingsHabitModal').classList.remove('hidden');
   setTimeout(()=>document.getElementById('editSettingsHabitName').focus(),100);
 };
@@ -2505,7 +2545,10 @@ window.confirmSettingsEditHabit = async function(){
   const group = document.getElementById('editSettingsHabitGroup').value;
   if(!name||!_settingsEditId) return;
   const h = currentMonth.habits.find(x=>x.id===_settingsEditId);
-  if(h){ h.name=name; h.group=group; }
+  const curve = document.getElementById('editSettingsHabitCurve').value;
+  if(h){ h.name=name; h.group=group; if(PENALTY_CURVES.includes(curve)) h.curve=curve; else delete h.curve;
+    const cap=parseInt(document.getElementById('editSettingsHabitCap').value,10);
+    if(cap>0) h.cap=cap; else delete h.cap; }
   closeSettingsEditHabit();
   refreshHabitViews();
   await fbSet(`months/${currentMonthId}/habits`, currentMonth.habits);
@@ -2948,7 +2991,39 @@ function renderDataPage(){
   const m=monthList.find(x=>x.id===currentMonthId);
   document.querySelectorAll('.data-month-name').forEach(el=>el.textContent=m?m.name:'the open month');
   document.querySelectorAll('[data-needs-month]').forEach(b=>b.disabled=!currentMonthId);
+  renderPenaltyCurve();
 }
+
+function renderPenaltyCurve(){
+  if(!document.getElementById('penaltyCurveSub')) return;
+  document.querySelectorAll('#penaltyCurveSeg .seg-btn').forEach(b=>b.classList.toggle('active',b.dataset.curve===PENALTY_CURVE));
+  document.getElementById('penaltyCurveSub').textContent=`For habits without their own curve. Misses in a row cost ${CURVE_SERIES[PENALTY_CURVE]} points.`;
+  const capIn=document.getElementById('penaltyCapInput');
+  if(document.activeElement!==capIn) capIn.value=PENALTY_CAP>0?PENALTY_CAP:'';
+  document.getElementById('penaltyCapSub').textContent=PENALTY_CAP>0
+    ?`For habits without their own cap, no single miss costs more than ${PENALTY_CAP} points. Clear the box to remove it.`
+    :'Off. Enter a number to set a maximum per miss for habits without their own cap.';
+}
+
+window.setPenaltyCap=function(val){
+  const n=Math.max(0,parseInt(val,10)||0);
+  if(n===PENALTY_CAP){ renderPenaltyCurve(); return; }
+  PENALTY_CAP=n;
+  localStorage.setItem('hc-penalty-cap',String(n));
+  saveGroupSettings();
+  renderPenaltyCurve();
+  if(currentMonthId){ renderHabits(); renderDailyScore(); if(activeTab==='overview') renderOverview(); }
+  showToast(n>0?`Penalty capped at ${n} ✓`:'Penalty cap removed');
+};
+
+window.setPenaltyCurve=function(curve){
+  if(!PENALTY_CURVES.includes(curve)||curve===PENALTY_CURVE) return;
+  PENALTY_CURVE=curve;
+  localStorage.setItem('hc-penalty-curve',curve);
+  saveGroupSettings();
+  renderPenaltyCurve();
+  if(currentMonthId){ renderHabits(); renderDailyScore(); if(activeTab==='overview') renderOverview(); }
+};
 
 window.confirmClearAllData=function(){
   const m=monthList.find(x=>x.id===currentMonthId);
