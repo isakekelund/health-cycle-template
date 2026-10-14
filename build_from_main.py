@@ -196,7 +196,7 @@ function trackedDaysText(){
 function weeklyGoal(){ return SCORING.days.length; }
 function penaltyFor(streak, growth=SCORING.growth, cap=SCORING.cap){
   const b=SCORING.start, n=streak+1;
-  const p=growth==='flat'?b:growth==='double'?b*2**streak:growth==='square'?b*n*n:b*n;
+  const p=growth==='flat'?b:growth==='double'?b*2**streak:growth==='cube'?b*n*n*n:growth==='square'?b*n*n:b*n;
   return cap>0?Math.min(p,cap):p;
 }
 function penaltySequenceText(n=4){
@@ -216,9 +216,9 @@ rx(
     r"const PENALTY_CURVES=.*?function getMissPenalty\(habitId, date\)\{.*?\n\}",
     """// Motivation system: each habit can have its own curve and cap. Habits without
 // their own follow the defaults in Settings → Scoring.
-const PENALTY_CURVES=['flat','linear','double','square'];
-const CURVE_LABEL={flat:'same',linear:'adds up',double:'doubles',square:'x²'};
-const CURVE_SERIES={flat:'1, 1, 1, 1, ...',linear:'1, 2, 3, 4, ...',double:'1, 2, 4, 8, ...',square:'1, 4, 9, 16, ...'};
+const PENALTY_CURVES=['flat','linear','double','square','cube'];
+const CURVE_LABEL={flat:'same',linear:'adds up',double:'doubles',square:'x²',cube:'x³'};
+const CURVE_SERIES={flat:'1, 1, 1, 1, ...',linear:'1, 2, 3, 4, ...',double:'1, 2, 4, 8, ...',square:'1, 4, 9, 16, ...',cube:'1, 8, 27, 64, ...'};
 // Shared code from the personal app still reads these; the client uses SCORING instead.
 let PENALTY_CURVE='linear', PENALTY_CAP=0;
 function habitById(habitId){ return currentMonth&&currentMonth.habits?currentMonth.habits.find(x=>x.id===habitId):null; }
@@ -239,11 +239,13 @@ r("function renderPenaltyCurve(){", "function renderPenaltyCurve(){\n  if(!docum
 r(
     """      <option value="linear">Curve: linear (1, 2, 3, ...)</option>
       <option value="double">Curve: doubling (1, 2, 4, 8, ...)</option>
-      <option value="square">Curve: x² (1, 4, 9, ...)</option>""",
+      <option value="square">Curve: x² (1, 4, 9, ...)</option>
+      <option value="cube">Curve: x³ (1, 8, 27, ...)</option>""",
     """      <option value="flat">Curve: same every time (1, 1, 1, ...)</option>
       <option value="linear">Curve: adds up (1, 2, 3, ...)</option>
       <option value="double">Curve: doubles (1, 2, 4, 8, ...)</option>
-      <option value="square">Curve: x² (1, 4, 9, ...)</option>""",
+      <option value="square">Curve: x² (1, 4, 9, ...)</option>
+      <option value="cube">Curve: x³ (1, 8, 27, ...)</option>""",
 )
 r("`Curve: use default (${CURVE_LABEL[PENALTY_CURVE]})`", "`Curve: use default (${CURVE_LABEL[SCORING.growth]})`")
 r("PENALTY_CAP>0?`Use default (${PENALTY_CAP})`:'Use default (no cap)'", "SCORING.cap>0?`Use default (${SCORING.cap})`:'Use default (no cap)'")
@@ -328,7 +330,7 @@ r(
     "// GRAPH\n",
     """function renderScoringExplain(){
   const el=document.getElementById('scoringExplain'); if(!el) return;
-  const grow={flat:'Every missed day costs the same',linear:'Each miss in a row costs more',double:'Each miss in a row doubles',square:'Each miss in a row costs its number squared'}[SCORING.growth];
+  const grow={flat:'Every missed day costs the same',linear:'Each miss in a row costs more',double:'Each miss in a row doubles',square:'Each miss in a row costs its number squared',cube:'Each miss in a row costs its number cubed'}[SCORING.growth];
   el.innerHTML=`Each habit done = +1 point. ${grow}: ${penaltySequenceText()}${SCORING.growth==='flat'?'':' — until you do it again'}.<br>
     <strong style="color:var(--green-bright);font-weight:500">A day counts as positive</strong> when total points are above 0.<br>
     <strong style="color:var(--red-bright);font-weight:500">A day counts as negative</strong> when total points are 0 or below.<br>
@@ -440,7 +442,7 @@ function renderScoringSettings(){
     `<button class="day-pill${SCORING.days.includes(d)?' on':''}" onclick="scToggleDay(${d})">${DAY_SHORT[d]}</button>`).join('');
   document.getElementById('scWorkout').checked=SCORING.workoutEveryDay;
   segHTML('scStart',[[1,'−1'],[2,'−2'],[3,'−3'],[5,'−5']],SCORING.start,'start');
-  segHTML('scGrowth',[['flat','Same'],['linear','Adds up'],['double','Doubles'],['square','x²']],SCORING.growth,'growth');
+  segHTML('scGrowth',[['flat','Same'],['linear','Adds up'],['double','Doubles'],['square','x²'],['cube','x³']],SCORING.growth,'growth');
   segHTML('scCap',[[0,'None'],[5,'5'],[7,'7'],[10,'10'],[20,'20']],SCORING.cap,'cap');
   document.getElementById('scPreview').innerHTML=`Missing a habit several days in a row: <strong>${penaltySequenceText(5)}</strong>`;
   const d=ESCALATION_START;
